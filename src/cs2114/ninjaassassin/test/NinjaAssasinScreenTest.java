@@ -1,13 +1,13 @@
 package cs2114.ninjaassassin.test;
 
-import cs2114.ninjaassassin.NinjaAssasinScreen;
+import cs2114.ninjaassassin.NinjaAssassinScreen;
 
 public class NinjaAssasinScreenTest
-    extends student.AndroidTestCase<NinjaAssasinScreen>
+    extends student.AndroidTestCase<NinjaAssassinScreen>
 {
 
     public NinjaAssasinScreenTest() {
-        super(NinjaAssasinScreen.class);
+        super(NinjaAssassinScreen.class);
     }
 
     public void setUp() {

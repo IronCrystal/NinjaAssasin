@@ -9,7 +9,7 @@ import sofia.app.Screen;
  *  @author Andrew Peace
  *  @version Nov 1, 2014
  */
-public class NinjaAssasinScreen extends Screen
+public class NinjaAssassinScreen extends Screen
 {
     public void initialize() {
 //the first edit

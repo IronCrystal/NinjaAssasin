@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package cs2114.ninjaassasin;
+package cs2114.ninjaassassin;
 
 public final class R {
     public static final class attr {
@@ -17,7 +17,7 @@ public final class R {
         public static final int textView1=0x7f060000;
     }
     public static final class layout {
-        public static final int ninjaassasinscreen=0x7f030000;
+        public static final int ninjaassassinscreen=0x7f030000;
     }
     public static final class string {
         public static final int app_name=0x7f040000;
