@@ -9,5 +9,8 @@ package cs2114.ninjaassasin.world;
  */
 public class Location
 {
-
+    public void moveRight()
+    {
+        // Moves to the right
+    }
 }
