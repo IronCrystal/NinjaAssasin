@@ -5,7 +5,6 @@ import sofia.app.Screen;
 public class NinjaAssasinScreen extends Screen
 {
     public void initialize() {
-        //hdgfhg uifg ug
 
     }
 }
