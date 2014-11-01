@@ -5,6 +5,6 @@ import sofia.app.Screen;
 public class NinjaAssasinScreen extends Screen
 {
     public void initialize() {
-
+//the first edit
     }
 }
