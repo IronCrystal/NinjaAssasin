@@ -36,8 +36,14 @@ public class Room
         parseFile();
     }
 
-    private void parseFile() {
-        //TODO
+    // ----------------------------------------------------------
+    /**
+     * Returns the hashmap of enemies and their starting locations
+     * @return enemyStartLocations Hashmap of entities and location
+     */
+    public HashMap<Entity, Location> getEnemyStartLocations()
+    {
+        return enemyStartLocations;
     }
 
     // ----------------------------------------------------------
@@ -51,6 +57,16 @@ public class Room
 
     // ----------------------------------------------------------
     /**
+     * Returns the data file for the room
+     * @return file The Data file
+     */
+    public File getFile()
+    {
+        return file;
+    }
+
+    // ----------------------------------------------------------
+    /**
      * Returns the location of the exit
      * @return exit The Exit
      */
@@ -58,28 +74,37 @@ public class Room
         return playerExit;
     }
 
-    public Tile[][] getTiles()
-    {
-        return tiles;
-    }
-
+    // ----------------------------------------------------------
+    /**
+     * Returns the location where the player starts
+     * @return playerStart The Starting Location
+     */
     public Location getPlayerStart()
     {
         return playerStart;
     }
 
+    // ----------------------------------------------------------
+    /**
+     * Returns the location where the target starts
+     * @return targetStart The Target's Starting Location
+     */
     public Location getTargetStart()
     {
         return targetStart;
     }
 
-    public HashMap<Entity, Location> getEnemyStartLocations()
+    // ----------------------------------------------------------
+    /**
+     * Returns the tiles of the room
+     * @return tiles The tiles
+     */
+    public Tile[][] getTiles()
     {
-        return enemyStartLocations;
+        return tiles;
     }
 
-    public File getFile()
-    {
-        return file;
+    private void parseFile() {
+        //TODO
     }
 }
