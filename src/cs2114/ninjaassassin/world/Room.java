@@ -34,7 +34,7 @@ public class Room implements Runnable
     // ----------------------------------------------------------
     /**
      * Create a new Room object.
-     * @param file The file representing the room data
+     * @param is The input stream
      */
     public Room(InputStream is) {
         //this.file = file;

@@ -4,7 +4,6 @@ import cs2114.ninjaassassin.world.tile.Tile;
 import sofia.app.ShapeScreen;
 import java.io.IOException;
 import cs2114.ninjaassassin.world.Room;
-import sofia.app.Screen;
 // -------------------------------------------------------------------------
 /**
  *  Represents the screen used in the NinjaAssasin app

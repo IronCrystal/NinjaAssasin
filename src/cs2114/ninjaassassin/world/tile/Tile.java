@@ -15,6 +15,10 @@ public class Tile extends RectangleShape
     /**
      * Create a new Tile object.
      * @param image The tile's image
+     * @param left The left position of the tile
+     * @param top The top position of the tile
+     * @param right The right position of the tile
+     * @param bottom The bottom position of the tile
      */
     public Tile(String image, float left,
             float top, float right, float bottom) {
