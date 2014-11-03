@@ -1,5 +1,6 @@
 package cs2114.ninjaassassin.world.tile;
 
+import sofia.graphics.Color;
 import sofia.graphics.RectangleShape;
 
 // -------------------------------------------------------------------------
@@ -24,5 +25,6 @@ public class Tile extends RectangleShape
             float top, float right, float bottom) {
         super(left, top, right, bottom);
         setImage(image);
+        setColor(Color.black);
     }
 }
