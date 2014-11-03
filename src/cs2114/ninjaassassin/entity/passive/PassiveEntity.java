@@ -1,5 +1,6 @@
 package cs2114.ninjaassassin.entity.passive;
 
+import cs2114.ninjaassassin.world.Location;
 import cs2114.ninjaassassin.entity.Entity;
 
 // -------------------------------------------------------------------------
@@ -12,5 +13,11 @@ import cs2114.ninjaassassin.entity.Entity;
  */
 public abstract class PassiveEntity extends Entity
 {
+
+    public PassiveEntity(Location loc, String imageName, int size)
+    {
+        super(loc, imageName, size);
+        // TODO Auto-generated constructor stub
+    }
 
 }

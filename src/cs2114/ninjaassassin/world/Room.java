@@ -1,9 +1,13 @@
 package cs2114.ninjaassassin.world;
 
-import cs2114.ninjaassassin.world.tile.Tile;
 import cs2114.ninjaassassin.entity.Entity;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.io.File;
 import java.util.List;
 
 // -------------------------------------------------------------------------
@@ -13,10 +17,10 @@ import java.util.List;
  *  @author Andrew Peace
  *  @version Nov 1, 2014
  */
-public class Room
+public class Room implements Runnable
 {
     private List<Entity> entities;
-    private Tile[][] tiles;
+    private String[][] tileImages;
 
     private Location playerExit;
     private Location playerStart;
@@ -24,15 +28,17 @@ public class Room
 
     private HashMap<Entity, Location> enemyStartLocations;
 
-    private File file;
+    //private File file;
+    private InputStream inputStream;
 
     // ----------------------------------------------------------
     /**
      * Create a new Room object.
      * @param file The file representing the room data
      */
-    public Room(File file) {
-        this.file = file;
+    public Room(InputStream is) {
+        //this.file = file;
+        inputStream = is;
         parseFile();
     }
 
@@ -60,10 +66,10 @@ public class Room
      * Returns the data file for the room
      * @return file The Data file
      */
-    public File getFile()
-    {
-        return file;
-    }
+    //public File getFile()
+   // {
+   //     return file;
+    //}
 
     // ----------------------------------------------------------
     /**
@@ -99,12 +105,48 @@ public class Room
      * Returns the tiles of the room
      * @return tiles The tiles
      */
-    public Tile[][] getTiles()
+    public String[][] getTileImages()
     {
-        return tiles;
+        return tileImages;
     }
 
     private void parseFile() {
-        //TODO
+        try
+        {
+            BufferedReader in = new BufferedReader
+                (new InputStreamReader(inputStream));
+            String str;
+            int height = 0;
+            int width = 0;
+            ArrayList<String> tileList = new ArrayList<String>();
+            while ((str = in.readLine()) != null) {
+                height++;
+                String[] chars = str.split(" ");
+                width = chars.length;
+                for (String string : chars) {
+                    tileList.add("tile" + string);
+                }
+            }
+            inputStream.close();
+            in.close();
+            tileImages = new String[height][width];
+            for (int x = 0; x < tileList.size(); x++) {
+                tileImages[x / width][x % width] = tileList.get(x);
+            }
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public void run()
+    {
+        // TODO Auto-generated method stub
+
     }
 }

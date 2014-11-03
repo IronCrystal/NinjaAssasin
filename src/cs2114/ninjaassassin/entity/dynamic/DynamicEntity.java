@@ -1,5 +1,6 @@
 package cs2114.ninjaassassin.entity.dynamic;
 
+import cs2114.ninjaassassin.world.Location;
 import cs2114.ninjaassassin.entity.Entity;
 
 // -------------------------------------------------------------------------
@@ -12,5 +13,11 @@ import cs2114.ninjaassassin.entity.Entity;
  */
 public abstract class DynamicEntity extends Entity
 {
+
+    public DynamicEntity(Location loc, String imageName, int size)
+    {
+        super(loc, imageName, size);
+        // TODO Auto-generated constructor stub
+    }
 
 }
