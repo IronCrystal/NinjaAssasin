@@ -35,7 +35,7 @@ public abstract class PassiveEntity
      */
     public PassiveEntity(Location loc, String imageName, int size)
     {
-        super(loc, imageName, size);
+        super(loc);
         addHealth = 0;
         addSpeed = 0;
     }
@@ -48,10 +48,6 @@ public abstract class PassiveEntity
      *
      * @param loc
      *            The location of the entity
-     * @param imageName
-     *            The name of the entity's image
-     * @param size
-     *            The size of the entity
      * @param addHealth
      *            The additional health the entity provides to an active entity
      *            upon contact
@@ -61,12 +57,10 @@ public abstract class PassiveEntity
      */
     public PassiveEntity(
         Location loc,
-        String imageName,
-        int size,
         float addHealth,
         float addSpeed)
     {
-        super(loc, imageName, size);
+        super(loc);
         this.addHealth = addHealth;
         this.addSpeed = addSpeed;
     }
