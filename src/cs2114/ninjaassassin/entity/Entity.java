@@ -1,7 +1,6 @@
 package cs2114.ninjaassassin.entity;
 
 import cs2114.ninjaassassin.world.Location;
-import sofia.graphics.*;
 
 // -------------------------------------------------------------------------
 /**
@@ -12,10 +11,8 @@ import sofia.graphics.*;
  * @version Nov 1, 2014
  */
 public abstract class Entity
-    extends FillableShape
 {
     private Location location;
-    private int      size;
 
 
     // ----------------------------------------------------------
@@ -24,17 +21,10 @@ public abstract class Entity
      *
      * @param loc
      *            The location of the entity
-     * @param imageName
-     *            The name of the image of the entity
-     * @param size
-     *            The size of the entity
      */
-    public Entity(Location loc, String imageName, int size)
+    public Entity(Location loc)
     {
         this.location = loc;
-        this.size = size;
-
-        setImage(imageName);
     }
 
 
@@ -53,19 +43,6 @@ public abstract class Entity
 
     // ----------------------------------------------------------
     /**
-     * Sets the size of the entity.
-     *
-     * @param size
-     *            The size of the entity
-     */
-    public void setSize(int size)
-    {
-        this.size = size;
-    }
-
-
-    // ----------------------------------------------------------
-    /**
      * Returns the location of the entity.
      *
      * @return The location of the entity
@@ -75,15 +52,4 @@ public abstract class Entity
         return location;
     }
 
-
-    // ----------------------------------------------------------
-    /**
-     * Returns the size of the entity.
-     *
-     * @return The size of the entity
-     */
-    public int getSize()
-    {
-        return size;
-    }
 }

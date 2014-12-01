@@ -1,5 +1,10 @@
 package cs2114.ninjaassassin.entity.dynamic;
 
+import android.graphics.RectF;
+import sofia.graphics.Drawing;
+import cs2114.ninjaassassin.entity.Entity;
+import cs2114.ninjaassassin.world.Room;
+import cs2114.ninjaassassin.graph.Graph;
 import cs2114.ninjaassassin.entity.dynamic.DynamicEntity;
 import java.util.*;
 import cs2114.ninjaassassin.world.Location;
@@ -16,7 +21,7 @@ import cs2114.ninjaassassin.world.Location;
  * @version Nov 1, 2014
  */
 
-public abstract class Enemy
+public class Enemy
     extends DynamicEntity
 {
 
@@ -24,7 +29,11 @@ public abstract class Enemy
     private float                rangeOfView;
     private Location             targetLoc;
     private LinkedList<Location> wayPoints;
-    private LinkedList<Location> path;
+    private Stack<Location>      path;
+    private Stack<Integer>       intPath;
+    private double[]             distances;
+    private Graph                graph;
+    private Room                 room;
 
 
     // ----------------------------------------------------------
@@ -33,10 +42,6 @@ public abstract class Enemy
      *
      * @param loc
      *            The location of the entity
-     * @param imageName
-     *            The name of the entity's image
-     * @param size
-     *            The size of the entity
      * @param speed
      *            The speed of the entity
      * @param health
@@ -47,20 +52,26 @@ public abstract class Enemy
      *            The field of view of the enemy in radians
      * @param rangeOfView
      *            The range of view of the enemy
+     * @param graph
+     *            The Graph of the accessible areas of the room
+     * @param room
+     *            The room in which the entity resides
      */
     public Enemy(
         Location loc,
-        String imageName,
-        int size,
         float speed,
         float health,
         float lethality,
         float fieldOfView,
-        float rangeOfView)
+        float rangeOfView,
+        Graph graph,
+        Room room)
     {
-        super(loc, imageName, size, speed, health, lethality);
+        super(loc, speed, health, lethality);
         this.fieldOfView = fieldOfView;
         this.rangeOfView = rangeOfView;
+        this.graph = graph;
+        this.room = room;
         wayPoints.add(loc); // Add the starting location to the patrol circuit
     }
 
@@ -176,9 +187,7 @@ public abstract class Enemy
      */
     public void pursue(DynamicEntity target)
     {
-        this.setTargetLoc(target.getLocation());
-        // Stack<Location> path = findPath(targetLoc);
-        // Move along the path
+        // Move along the path found in findPath()
     }
 
 
@@ -190,38 +199,85 @@ public abstract class Enemy
      *            The target location to which to find a path
      * @return A stack of locations marking a path to the target
      */
-    public Stack<Location> findPath(Location target)
+    public Stack<Integer> findPath(int start, int[] pred, double[] dist)
     {
-        // Assign to every node a tentative distance value: set it to zero for
-        // our initial node and to infinity for all other nodes.
+        int numV = graph.getNumV();
+        HashSet<Integer> vMinusS = new HashSet<Integer>(numV);
 
-        // Mark all nodes unvisited. Set the initial node as current. Create a
-        // set of the unvisited nodes called the unvisited set consisting of
-        // all the nodes.
+        // Initialize V-S
+        for (int i = 0; i < numV; i++)
+        {
+            if (i != start)
+            {
+                vMinusS.add(i);
+            }
+        }
 
-        // For the current node, consider all of its unvisited neighbors and
-        // calculate their tentative distances. Compare the newly calculated
-        // tentative distance to the current assigned value and assign the
-        // smaller one. For example, if the current node A is marked with a
-        // distance of 6, and the edge connecting it with a neighbor B has
-        // length 2, then the distance to B (through A) will be 6 + 2 = 8. If
-        // B was previously marked with a distance greater than 8 then change
-        // it to 8. Otherwise, keep the current value.
+        // Initialize pred and dist
+        for (int v : vMinusS)
+        {
+            pred[v] = start;
+            dist[v] = graph.getEdge(start, v).getWeight();
+        }
 
-        // When we are done considering all of the neighbors of the current
-        // node, mark the current node as visited and remove it from the
-        // unvisited set. A visited node will never be checked again.
+        // Main loop
+        while (vMinusS.size() != 0)
+        {
+            // Find the value u in V-S with the smallest dist[u]
+            double minDist = Double.POSITIVE_INFINITY;
+            int u = -1;
+            for (int v : vMinusS)
+            {
+                if (dist[v] < minDist)
+                {
+                    minDist = dist[v];
+                    u = v;
+                }
+            }
 
-        // If the destination node has been marked visited (when planning a
-        // route between two specific nodes) or if the smallest tentative
-        // distance among the nodes in the unvisited set is infinity (when
-        // planning a complete traversal; occurs when there is no connection
-        // between the initial node and remaining unvisited nodes), then stop.
-        // The algorithm has finished.
+            // Remove u from vMinusS
+            vMinusS.remove(u);
 
-        // Select the unvisited node that is marked with the smallest
-        // tentative distance, and set it as the new "current node" then go
-        // back to step 3.
-        return null;
+            // Update the distances
+            for (int v : vMinusS)
+            {
+                if (graph.isEdge(u, v))
+                {
+                    double weight = graph.getEdge(u, v).getWeight();
+                    if (dist[u] + weight < dist[v])
+                    {
+                        dist[v] = dist[u] + weight;
+                        pred[v] = u;
+                    }
+                }
+            }
+        }
+        intPath = new Stack<Integer>();
+        for (int i = 0; i < pred.length; i++)
+        {
+            intPath.push(pred[i]);
+        }
+        return intPath;
+    }
+
+
+    public void update()
+    {
+        for (Entity ent : room.getEntities())
+        {
+            // If this enemy can see the ninja
+            if ((ent.getLocation().getDistanceFrom(this.getLocation())
+                <= rangeOfView)
+                && (ent.getLocation().getRelativeDirection(this.getLocation())
+                    <= getLocation()
+                    .getDirection() + fieldOfView / 2)
+                && (ent.getLocation().getRelativeDirection(this.getLocation())
+                    >= getLocation()
+                    .getDirection() - fieldOfView)
+                && ent instanceof Ninja)
+            {
+
+            }
+        }
     }
 }

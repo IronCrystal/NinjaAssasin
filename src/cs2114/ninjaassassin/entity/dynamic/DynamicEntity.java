@@ -26,10 +26,6 @@ public abstract class DynamicEntity
      *
      * @param loc
      *            The location of the entity
-     * @param imageName
-     *            The name of the entity's image
-     * @param size
-     *            The size of the entity
      * @param speed
      *            The speed at which the entity can move
      * @param health
@@ -39,18 +35,14 @@ public abstract class DynamicEntity
      */
     public DynamicEntity(
         Location loc,
-        String imageName,
-        int size,
         float speed,
         float health,
         float lethality)
     {
-        super(loc, imageName, size);
+        super(loc);
         this.speed = speed;
         this.health = health;
         this.lethality = lethality;
-
-        // TODO Auto-generated constructor stub
     }
 
 
@@ -145,5 +137,12 @@ public abstract class DynamicEntity
     {
         target.setHealth(target.getHealth() - lethality);
     }
+
+
+    // ----------------------------------------------------------
+    /**
+     * Updates the entity
+     */
+    public abstract void update();
 
 }
