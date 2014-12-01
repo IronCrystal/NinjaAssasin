@@ -264,13 +264,14 @@ public class Enemy
     public void update()
     {
         // If this enemy can see the ninja
-        if ((ent.getLocation().getDistanceFrom(this.getLocation()) <= rangeOfView)
-            && (ent.getLocation().getRelativeDirection(this.getLocation()) <= getLocation()
+        Ninja ninja = room.getNinja();
+        if ((ninja.getLocation().getDistanceFrom(this.getLocation()) <= rangeOfView)
+            && (ninja.getLocation().getRelativeDirection(this.getLocation()) <= getLocation()
                 .getDirection() + fieldOfView / 2)
-            && (ent.getLocation().getRelativeDirection(this.getLocation()) >= getLocation()
-                .getDirection() - fieldOfView / 2) && ent instanceof Ninja)
+            && (ninja.getLocation().getRelativeDirection(this.getLocation()) >= getLocation()
+                .getDirection() - fieldOfView / 2))
         {
-
+            // working on this
         }
     }
 }
