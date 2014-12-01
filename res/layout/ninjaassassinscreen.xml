@@ -13,7 +13,7 @@
         android:text="| |" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/Footer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -23,22 +23,22 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/Header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/levelBackground"
+        android:layout_alignBottom="@+id/button1"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/button1"
         android:text="Header"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <ImageView
-        android:id="@+id/levelBackground"
+    <sofia.graphics.ShapeView
+        android:id="@+id/shapeView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textView2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/button1"
-        android:src="@drawable/ic_launcher" />
-
+        android:layout_below="@+id/Header"
+        android:layout_above="@+id/Footer"
+        android:layout_centerInParent="true" >
+    </sofia.graphics.ShapeView>
 </RelativeLayout>

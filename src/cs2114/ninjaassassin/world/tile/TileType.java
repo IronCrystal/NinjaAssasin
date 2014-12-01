@@ -35,4 +35,17 @@ public enum TileType
      * Represents the current path of the path finder
      */
     CURRENT_PATH;
+
+    // ----------------------------------------------------------
+    /**
+     * Returns the tile's type whether it is a path or a wall
+     * @param imageName The image name
+     * @return type The tile type
+     */
+    public static TileType getTileType(String imageName) {
+        if (imageName.equalsIgnoreCase("tile0")) {
+            return PATH;
+        }
+        return WALL;
+    }
 }

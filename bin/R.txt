@@ -12,14 +12,14 @@ int drawable tile3 0x7f02000a
 int drawable tile4 0x7f02000b
 int drawable tile5 0x7f02000c
 int drawable tile6 0x7f02000d
+int id Footer 0x7f060005
+int id Header 0x7f060006
 int id background 0x7f060001
 int id button1 0x7f060004
 int id level1 0x7f060000
-int id levelBackground 0x7f060007
 int id options 0x7f060002
 int id play 0x7f060003
-int id textView1 0x7f060006
-int id textView2 0x7f060005
+int id shapeView 0x7f060007
 int layout levelselectscreen 0x7f030000
 int layout mainmenuscreen 0x7f030001
 int layout ninjaassassinscreen 0x7f030002

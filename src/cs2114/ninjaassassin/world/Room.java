@@ -1,5 +1,10 @@
 package cs2114.ninjaassassin.world;
 
+import cs2114.ninjaassassin.entity.dynamic.Ninja;
+import cs2114.ninjaassassin.world.tile.Tile;
+import android.util.Log;
+import android.content.Context;
+import cs2114.ninjaassassin.drawing.TestEntity;
 import android.graphics.BitmapFactory;
 import android.content.res.Resources;
 import cs2114.ninjaassassin.R;
@@ -26,8 +31,10 @@ public class Room implements Runnable
 {
     private List<Entity> entities;
     private String[][] tileImages;
-    private Bitmap[][] bitmaps;
+    private Tile[][] tileMap;
+    //private Bitmap[][] bitmaps;
 
+    private Ninja ninja;
     private Location playerExit;
     private Location playerStart;
     private Location targetStart;
@@ -37,23 +44,27 @@ public class Room implements Runnable
     //private File file;
     private InputStream inputStream;
 
-    private Resources resources;
+    //private Resources resources;
 
-    private Bitmap background;
-    private Canvas canvas;
+    /*private Bitmap background;
+    private Canvas canvas;*/
+
+    //Testing
+    //private TestEntity test;
+    private Thread thread;
 
     // ----------------------------------------------------------
     /**
      * Create a new Room object.
      * @param is The input stream
      */
-    public Room(InputStream is, Resources resources) {
+    public Room(InputStream is) {
         //this.file = file;
         inputStream = is;
-        background = null;
-        this.resources = resources;
         parseFile();
-        createBackgroundImage();
+        //createBackgroundImage();
+        thread = new Thread(this);
+        thread.start();
     }
 
     // ----------------------------------------------------------
@@ -144,27 +155,10 @@ public class Room implements Runnable
             inputStream.close();
             in.close();
             tileImages = new String[height][width];
-            bitmaps = new Bitmap[height][width];
+            tileMap = new Tile[height][width];
             for (int x = 0; x < tileList.size(); x++) {
                 tileImages[x / width][x % width] = tileList.get(x);
-                if (tileList.get(x).equalsIgnoreCase("tile0")) {
-                    bitmaps[x / width][x % width] = BitmapFactory.decodeResource(resources, R.drawable.tile0);
-                }
-                else if (tileList.get(x).equalsIgnoreCase("tile2")) {
-                    bitmaps[x / width][x % width] = BitmapFactory.decodeResource(resources, R.drawable.tile2);
-                }
-                else if (tileList.get(x).equalsIgnoreCase("tile3")) {
-                    bitmaps[x / width][x % width] = BitmapFactory.decodeResource(resources, R.drawable.tile3);
-                }
-                else if (tileList.get(x).equalsIgnoreCase("tile4")) {
-                    bitmaps[x / width][x % width] = BitmapFactory.decodeResource(resources, R.drawable.tile4);
-                }
-                else if (tileList.get(x).equalsIgnoreCase("tile5")) {
-                    bitmaps[x / width][x % width] = BitmapFactory.decodeResource(resources, R.drawable.tile5);
-                }
-                else if (tileList.get(x).equalsIgnoreCase("tile6")) {
-                    bitmaps[x / width][x % width] = BitmapFactory.decodeResource(resources, R.drawable.tile6);
-                }
+
             }
         }
         catch (FileNotFoundException e)
@@ -177,74 +171,24 @@ public class Room implements Runnable
         }
     }
 
-    public Bitmap combineImages(Bitmap c, Bitmap s) { // can add a 3rd parameter 'String loc' if you want to save the new image - left some code to do that at the bottom
-        Bitmap cs = null;
-
-        int width, height = 0;
-
-        if(c.getWidth() > s.getWidth()) {
-            width = c.getWidth() + s.getWidth();
-            height = c.getHeight();
-        } else {
-            width = s.getWidth() + s.getWidth();
-            height = c.getHeight();
-        }
-
-        cs = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-
-        Canvas comboImage = new Canvas(cs);
-
-        comboImage.drawBitmap(c, 0f, 0f, null);
-        comboImage.drawBitmap(s, c.getWidth(), 0f, null);
-
-        // this is an extra bit I added, just incase you want to save the new image somewhere and then return the location
-        /*String tmpImg = String.valueOf(System.currentTimeMillis()) + ".png";
-
-        OutputStream os = null;
-        try {
-          os = new FileOutputStream(loc + tmpImg);
-          cs.compress(CompressFormat.PNG, 100, os);
-        } catch(IOException e) {
-          Log.e("combineImages", "problem combining images", e);
-        }*/
-
-        return cs;
-    }
-
-    private void createBackgroundImage() {
-        int height = tileImages.length * 128;
-        int width = tileImages[0].length * 128;
-        background = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        canvas = new Canvas(background);
-        //canvas.drawBitmap(bitmaps[19][0], 0, 0, null);
-        //canvas.drawBitmap(bitmaps[19][0], 0, 128, null);
-        for (int y = 0; y < tileImages.length; y++) {
-            for (int x = 0; x < tileImages[y].length; x++) {
-                canvas.drawBitmap(bitmaps[y][x], x * 128, y * 128, null);
+    public void run()
+    {
+        long timeLastRun = System.currentTimeMillis();
+        while (true) {
+            if (System.currentTimeMillis() - timeLastRun > 1000) {
+                timeLastRun = System.currentTimeMillis();
+                Log.i("Room", "Runnign the thread");
             }
         }
     }
 
     // ----------------------------------------------------------
     /**
-     * Place a description of your method here.
-     * @return
+     * Returns the ninja object (the player)
+     * @return ninja the ninja
      */
-    public Bitmap getBackground() {
-        /*Bitmap bitmap = Bitmap.createBitmap(64, 64, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        canvas.draw*/
-        return background;
-    }
-
-    public void run()
+    public Ninja getNinja()
     {
-        // TODO Auto-generated method stub
-
-    }
-
-    public Canvas getCanvas()
-    {
-        return canvas;
+        return ninja;
     }
 }

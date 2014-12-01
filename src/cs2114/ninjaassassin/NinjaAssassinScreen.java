@@ -1,5 +1,6 @@
 package cs2114.ninjaassassin;
 
+import cs2114.ninjaassassin.world.tile.TileType;
 import android.graphics.Canvas;
 import sofia.graphics.ShapeView;
 import sofia.app.Screen;
@@ -17,19 +18,19 @@ import cs2114.ninjaassassin.world.Room;
  *  @author Andrew Peace
  *  @version Nov 1, 2014
  */
-public class NinjaAssassinScreen extends Screen
+public class NinjaAssassinScreen extends ShapeScreen
 {
     /**
      * Room
      */
     Room room;
-    public ImageView levelBackground;
+    //public ImageView levelBackground;
     //public ShapeView shapeView;
 
     public void initialize() {
         try
         {
-            room = new Room(getResources().getAssets().open("level1"), getResources());
+            room = new Room(getResources().getAssets().open("level1"));
         }
         catch (IOException e)
         {
@@ -37,27 +38,28 @@ public class NinjaAssassinScreen extends Screen
         }
         //shapeView.draw(room.getCanvas());
         //shapeView.setBackgroundColor(sofia.graphics.Color.white);
-        levelBackground.setImageBitmap(room.getBackground());
-        levelBackground.setBackgroundColor(Color.WHITE);
+        //levelBackground.setImageBitmap(room.getBackground());
+        //levelBackground.setBackgroundColor(Color.WHITE);
         //levelBackground.draw(room.getCanvas());
         //levelBackground.setBackgroundColor(Color.GREEN);
         //levelBackground.setImageDrawable(new BitmapDrawable(getResources(), room.getBackground()));
-        /*if (room != null) {
+        if (room != null) {
+            float sideLength = getWidth() / room.getTileImages()[0].length;
+            /*Tile tile1 = new Tile(room.getTileImages()[0][0], 0, 0, sideLength, sideLength, TileType.getTileType(room.getTileImages()[0][0]));
+            add(tile1);
+            Tile tile2 = new Tile(room.getTileImages()[1][0], 0, sideLength, sideLength, sideLength * 2, TileType.getTileType(room.getTileImages()[0][0]));
+            add(tile2);*/
             for (int y = 0; y < room.getTileImages().length; y++) {
                 for (int x = 0; x < room.getTileImages()[y].length; x++) {
-                    float left = x * (getWidth() / room.getTileImages()[y].length);
-                    float top = y * (getHeight() / room.getTileImages().length);
-                    float right = left + (getWidth() / room.getTileImages()[y].length);
-                    float bottom = top + (getHeight() / room.getTileImages().length);
-                    Tile tile = new Tile(room.getTileImages()[y][x], left, top, right, bottom);
+                    float left = x * sideLength;
+                    float top = y * sideLength;
+                    float right = left + sideLength;
+                    float bottom = top + sideLength;
+                    Tile tile = new Tile(room.getTileImages()[y][x], left, top, right, bottom, TileType.getTileType(room.getTileImages()[y][x]));
                     add(tile);
                 }
             }
-        }*/
-    }
-
-    public void onDraw(Canvas canvas) {
-
+        }
     }
 
     // ----------------------------------------------------------
