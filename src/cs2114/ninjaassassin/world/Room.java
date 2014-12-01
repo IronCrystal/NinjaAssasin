@@ -1,16 +1,9 @@
 package cs2114.ninjaassassin.world;
 
+import android.util.Log;
+import cs2114.ninjaassassin.entity.Entity;
 import cs2114.ninjaassassin.entity.dynamic.Ninja;
 import cs2114.ninjaassassin.world.tile.Tile;
-import android.util.Log;
-import android.content.Context;
-import cs2114.ninjaassassin.drawing.TestEntity;
-import android.graphics.BitmapFactory;
-import android.content.res.Resources;
-import cs2114.ninjaassassin.R;
-import android.graphics.Canvas;
-import android.graphics.Bitmap;
-import cs2114.ninjaassassin.entity.Entity;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -190,5 +183,15 @@ public class Room implements Runnable
     public Ninja getNinja()
     {
         return ninja;
+    }
+
+    // ----------------------------------------------------------
+    /**
+     * Returns the tile map
+     * @return tileMap the tile map
+     */
+    public Tile[][] getTileMap()
+    {
+        return tileMap;
     }
 }
