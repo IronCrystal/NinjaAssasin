@@ -51,7 +51,7 @@ public class NinjaAssassinScreen extends ShapeScreen
             }
 
             //Create test ninja
-            ninja = new Ninja(new Location(5, 5, 0), "asdef", 3, 3, 3, 3);
+            ninja = room.getNinja();
             Log.i("Screen", "The starting location is : " + ninja.getLocation().toString());
             EntityDrawing image = new EntityDrawing("ninja", sideLength, ninja);
             ninja.addObserver(image);

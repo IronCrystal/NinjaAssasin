@@ -158,8 +158,14 @@ public class Room implements Runnable
             tileImages = new String[height][width];
             tileMap = new Tile[height][width];
             for (int x = 0; x < tileList.size(); x++) {
-                tileImages[x / width][x % width] = tileList.get(x);
-
+                if (tileList.get(x).equalsIgnoreCase("tileN")) {
+                    //Create ninja
+                    tileImages[x / width][x % width] = "tile0";
+                    ninja = new Ninja(new Location(x % width, x / width, 0), "adsf", 0, 0, 0, 0);
+                }
+                else {
+                    tileImages[x / width][x % width] = tileList.get(x);
+                }
             }
         }
         catch (FileNotFoundException e)
