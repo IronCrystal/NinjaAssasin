@@ -70,6 +70,18 @@ public class NinjaAssassinScreen extends ShapeScreen
             ninja.addObserver(image);
             add(image);
         }
+        else {
+            Log.e("Screen", "ROOM IS NULL");
+        }
+    }
+
+    // ----------------------------------------------------------
+    /**
+     * Returns the room object
+     * @return room The Room
+     */
+    public Room getRoom() {
+        return room;
     }
 
     // ----------------------------------------------------------

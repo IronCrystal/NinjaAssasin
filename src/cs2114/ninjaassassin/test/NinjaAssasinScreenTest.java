@@ -1,5 +1,7 @@
 package cs2114.ninjaassassin.test;
 
+import sofia.graphics.ShapeView;
+import android.view.View;
 import cs2114.ninjaassassin.NinjaAssassinScreen;
 
 // -------------------------------------------------------------------------
@@ -14,6 +16,8 @@ public class NinjaAssasinScreenTest
     extends student.AndroidTestCase<NinjaAssassinScreen>
 {
 
+    public ShapeView shapeView;
+
     // ----------------------------------------------------------
     /**
      * Create a new NinjaAssasinScreenTest object.
@@ -26,6 +30,16 @@ public class NinjaAssasinScreenTest
 
     public void setUp()
     {
-        // TODO Add initialization code
+        // Nothing to do here
+    }
+
+    // ----------------------------------------------------------
+    /**
+     * Tests the touch down method
+     */
+    public void testTouchDown() {
+        touchDown(shapeView, 2, 2);
+        assertNull(getScreen().getRoom());
+        //assertTrue(getScreen().getRoom().isTouchingDown());
     }
 }

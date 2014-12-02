@@ -6,6 +6,7 @@
     <uses-sdk
         android:minSdkVersion="11"
         android:targetSdkVersion="21" />
+    <instrumentation android:targetPackage="cs2114.ninjaassassin" android:name="android.test.InstrumentationTestRunner"></instrumentation>
 
     <application
         android:allowBackup="true"
@@ -36,6 +37,7 @@
             android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
+        <uses-library android:name="android.test.runner"/>
     </application>
 
 </manifest>

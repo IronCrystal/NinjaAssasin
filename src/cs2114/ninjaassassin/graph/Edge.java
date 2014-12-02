@@ -87,7 +87,7 @@ public class Edge
      */
     public int getDest()
     {
-        return dest;
+        return 0;
     }
 
 
@@ -99,7 +99,7 @@ public class Edge
      */
     public int getSource()
     {
-        return source;
+        return 0;
     }
 
 
