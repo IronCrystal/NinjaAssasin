@@ -129,6 +129,26 @@ public class Location
 
     // ----------------------------------------------------------
     /**
+     * Move a given distance in a given direction
+     *
+     * @param distance
+     *            The distance to move
+     * @param dir
+     *            The direction in which to move
+     * @return A new location that is the given distance in the given direction
+     *         from this location
+     */
+    public Location move(float distance, float dir)
+    {
+        return new Location(
+            (float)(x + distance * Math.cos(dir)),
+            (float)(y + distance * Math.sin(dir)),
+            direction);
+    }
+
+
+    // ----------------------------------------------------------
+    /**
      * Sets the direction position of the location.
      *
      * @param direction

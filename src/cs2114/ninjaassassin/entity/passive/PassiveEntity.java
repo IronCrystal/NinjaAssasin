@@ -55,10 +55,7 @@ public abstract class PassiveEntity
      *            The additional speed the entity provides to an active entity
      *            upon contact
      */
-    public PassiveEntity(
-        Location loc,
-        float addHealth,
-        float addSpeed)
+    public PassiveEntity(Location loc, float addHealth, float addSpeed)
     {
         super(loc);
         this.addHealth = addHealth;
@@ -77,6 +74,8 @@ public abstract class PassiveEntity
     public void setAddHealth(float addHealth)
     {
         this.addHealth = addHealth;
+        setChanged();
+        notifyObservers();
     }
 
 
@@ -91,6 +90,8 @@ public abstract class PassiveEntity
     public void setAddSpeed(float addSpeed)
     {
         this.addSpeed = addSpeed;
+        setChanged();
+        notifyObservers();
     }
 
 

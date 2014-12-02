@@ -1,5 +1,6 @@
 package cs2114.ninjaassassin.entity;
 
+import java.util.Observable;
 import cs2114.ninjaassassin.world.Location;
 
 // -------------------------------------------------------------------------
@@ -10,7 +11,7 @@ import cs2114.ninjaassassin.world.Location;
  * @author Elliott Fairhurst
  * @version Nov 1, 2014
  */
-public abstract class Entity
+public abstract class Entity extends Observable
 {
     private Location location;
 
@@ -38,6 +39,8 @@ public abstract class Entity
     public void setLocation(Location loc)
     {
         this.location = loc;
+        setChanged();
+        notifyObservers();
     }
 
 

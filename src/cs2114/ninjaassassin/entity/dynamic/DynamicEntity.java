@@ -95,6 +95,8 @@ public abstract class DynamicEntity
     public void setHealth(float health)
     {
         this.health = health;
+        setChanged();
+        notifyObservers();
     }
 
 
@@ -108,6 +110,8 @@ public abstract class DynamicEntity
     public void setSpeed(float speed)
     {
         this.speed = speed;
+        setChanged();
+        notifyObservers();
     }
 
 
@@ -122,6 +126,8 @@ public abstract class DynamicEntity
     public void setLethality(float lethality)
     {
         this.lethality = lethality;
+        setChanged();
+        notifyObservers();
     }
 
 

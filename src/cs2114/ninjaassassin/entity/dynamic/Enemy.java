@@ -86,6 +86,8 @@ public class Enemy
     public void setTargetLoc(Location tLoc)
     {
         this.targetLoc = tLoc;
+        setChanged();
+        notifyObservers();
     }
 
 
@@ -100,6 +102,8 @@ public class Enemy
     public void setFieldOfView(float fOV)
     {
         this.fieldOfView = fOV;
+        setChanged();
+        notifyObservers();
     }
 
 
@@ -114,6 +118,8 @@ public class Enemy
     public void setRangeOfView(float rOV)
     {
         this.rangeOfView = rOV;
+        setChanged();
+        notifyObservers();
     }
 
 
@@ -164,6 +170,8 @@ public class Enemy
     public void addWayPoint(Location wayPoint)
     {
         wayPoints.add(wayPoint);
+        setChanged();
+        notifyObservers();
     }
 
 
@@ -257,6 +265,8 @@ public class Enemy
         {
             intPath.push(pred[i]);
         }
+        setChanged();
+        notifyObservers();
         return intPath;
     }
 
@@ -271,7 +281,20 @@ public class Enemy
             && (ninja.getLocation().getRelativeDirection(this.getLocation()) >= getLocation()
                 .getDirection() - fieldOfView / 2))
         {
-            // working on this
+            Location testLoc = this.getLocation();
+            while (testLoc.getDistanceFrom(ninja.getLocation()) > 0)
+            {
+                // working on this
+            }
+            this.setTargetLoc(ninja.getLocation());
         }
+        // Turn toward the ninja
+        this.getLocation().setDirection(
+            this.getLocation().getRelativeDirection(targetLoc));
+        this.setLocation(this.getLocation().move(
+            this.getSpeed(),
+            getLocation().getRelativeDirection(targetLoc)));
+        setChanged();
+        notifyObservers();
     }
 }
