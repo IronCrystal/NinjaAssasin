@@ -67,13 +67,16 @@ public class Ninja
     @Override
     public void update()
     {
-        Location newLocation =
-            getLocation().move(
-                getSpeed(),
-                getLocation().getRelativeDirection(targetLoc));
-        if (tileAt(newLocation).getType() == TileType.PATH)
+        if (getRoom().isTouchingDown())
         {
-            setLocation(newLocation);
+            Location newLocation =
+                getLocation().move(
+                    getSpeed(),
+                    getLocation().getRelativeDirection(targetLoc));
+            if (tileAt(newLocation).getType() == TileType.PATH)
+            {
+                setLocation(newLocation);
+            }
         }
     }
 }
