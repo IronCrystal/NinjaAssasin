@@ -75,8 +75,11 @@ public class Ninja
                     getLocation().getRelativeDirection(targetLoc));
             if (tileAt(newLocation).getType() == TileType.PATH)
             {
-                setLocation(newLocation);
+                setTargetLoc(newLocation);
             }
+            this.setLocation(getLocation().move(
+                getSpeed(),
+                getLocation().getRelativeDirection(targetLoc)));
         }
     }
 }
