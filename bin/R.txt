@@ -13,10 +13,10 @@ int drawable tile3 0x7f02000b
 int drawable tile4 0x7f02000c
 int drawable tile5 0x7f02000d
 int drawable tile6 0x7f02000e
-int id Footer 0x7f060005
-int id Header 0x7f060006
 int id background 0x7f060001
 int id button1 0x7f060004
+int id footer 0x7f060005
+int id header 0x7f060006
 int id level1 0x7f060000
 int id options 0x7f060002
 int id play 0x7f060003

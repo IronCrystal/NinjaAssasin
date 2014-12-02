@@ -32,6 +32,7 @@ public class Room implements Runnable
     private Location playerExit;
     private Location playerStart;
     private Location targetStart;
+    private String name = "";
 
     private HashMap<Entity, Location> enemyStartLocations;
 
@@ -148,11 +149,17 @@ public class Room implements Runnable
             int width = 0;
             ArrayList<String> tileList = new ArrayList<String>();
             while ((str = in.readLine()) != null) {
-                height++;
-                String[] chars = str.split(" ");
-                width = chars.length;
-                for (String string : chars) {
-                    tileList.add("tile" + string);
+                if (str.startsWith("Name:")) {
+                    name = str.substring(5).trim();
+                    Log.i("Room", "The name was found!  It is: " + name);
+                }
+                else {
+                    height++;
+                    String[] chars = str.split(" ");
+                    width = chars.length;
+                    for (String string : chars) {
+                        tileList.add("tile" + string);
+                    }
                 }
             }
             inputStream.close();
@@ -163,7 +170,7 @@ public class Room implements Runnable
                 if (tileList.get(x).equalsIgnoreCase("tileN")) {
                     //Create ninja
                     tileImages[x / width][x % width] = "tile0";
-                    ninja = new Ninja(new Location(x % width, x / width, 0), 0, 0, 0, this);
+                    ninja = new Ninja(new Location(x % width, x / width, 0), 0.3f, 5f, 1f, this);
                     entities.add(ninja);
                 }
                 else {
@@ -279,5 +286,15 @@ public class Room implements Runnable
     public void setTouchY(float touchY)
     {
         this.touchY = touchY;
+    }
+
+    // ----------------------------------------------------------
+    /**
+     * Returns the name of the room
+     * @return name The name
+     */
+    public String getName()
+    {
+        return name;
     }
 }
