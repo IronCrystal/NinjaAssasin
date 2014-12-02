@@ -1,8 +1,8 @@
 package cs2114.ninjaassassin;
 
+import android.widget.TextView;
 import android.util.Log;
 import cs2114.ninjaassassin.drawing.EntityDrawing;
-import cs2114.ninjaassassin.world.Location;
 import cs2114.ninjaassassin.entity.dynamic.Ninja;
 import cs2114.ninjaassassin.world.Room;
 import cs2114.ninjaassassin.world.tile.Tile;
@@ -27,6 +27,11 @@ public class NinjaAssassinScreen extends ShapeScreen
      */
     Ninja ninja;
 
+    /**
+     * Header text box
+     */
+    public TextView header;
+
     // ----------------------------------------------------------
     /**
      * Initializes the level
@@ -37,6 +42,7 @@ public class NinjaAssassinScreen extends ShapeScreen
         {
             Log.i("Screen", "level" + level);
             room = new Room(getResources().getAssets().open("level" + level));
+            header.setText(room.getName());
         }
         catch (IOException e)
         {
