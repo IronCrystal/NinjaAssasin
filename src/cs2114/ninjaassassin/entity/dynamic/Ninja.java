@@ -9,7 +9,8 @@ import cs2114.ninjaassassin.world.Location;
  * Write a one-sentence summary of your class here. Follow it with additional
  * details about its purpose, what abstraction it represents, and how to use it.
  *
- * @author Elliott
+ * @author Andrew Peace
+ * @author Elliott Fairhurst
  * @version Dec 1, 2014
  */
 
@@ -31,8 +32,6 @@ public class Ninja
      *            The health of the ninja
      * @param lethality
      *            The lethality of the ninja
-     * @param targetLoc
-     *            The ninja's target location
      * @param room
      *            The room
      */
@@ -69,6 +68,8 @@ public class Ninja
     {
         if (getRoom().isTouchingDown())
         {
+            setTargetLoc(new Location(getRoom().getTouchX(), getRoom()
+                .getTouchY(), 0));
             Location newLocation =
                 getLocation().move(
                     getSpeed(),

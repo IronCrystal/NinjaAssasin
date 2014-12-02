@@ -10,7 +10,8 @@ import java.util.*;
  * provide a constructor that specifies the number of vertices and whether or
  * not the graph is directed.
  *
- * @author Elliott
+ * @author Andrew Peace
+ * @author Elliott Fairhurst
  * @version Nov 29, 2014
  */
 
