@@ -1,5 +1,7 @@
 package cs2114.ninjaassassin.graph;
 
+import cs2114.ninjaassassin.world.Location;
+
 // -------------------------------------------------------------------------
 /**
  * Write a one-sentence summary of your class here. Follow it with additional
@@ -11,9 +13,9 @@ package cs2114.ninjaassassin.graph;
 
 public class Edge
 {
-    private int    dest;  // The destination vertex for an edge
-    private int    source; // The source vertex for an edge
-    private double weight; // The weight
+    private Location dest;  // The destination vertex for an edge
+    private Location source; // The source vertex for an edge
+    private float    weight; // The weight
 
 
     // ----------------------------------------------------------
@@ -25,10 +27,11 @@ public class Edge
      * @param dest
      *            The destination vertex
      */
-    public Edge(int source, int dest)
+    public Edge(Location source, Location dest)
     {
         this.source = source;
         this.dest = dest;
+        weight = (float)Math.sqrt((dest.getX() - source.getX())/(dest.getY() - source.getY()));
     }
 
 
@@ -43,7 +46,7 @@ public class Edge
      * @param w
      *            The weight
      */
-    public Edge(int source, int dest, double w)
+    public Edge(Location source, Location dest, float w)
     {
         this.source = source;
         this.dest = dest;
