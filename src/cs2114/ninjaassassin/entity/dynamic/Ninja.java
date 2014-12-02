@@ -69,16 +69,17 @@ public class Ninja
     {
         if (getRoom().isTouchingDown())
         {
-            setTargetLoc(new Location(getRoom().getTouchX(), getRoom()
-                .getTouchY(), 0));
             Location newLocation =
                 getLocation().move(
                     getSpeed(),
                     getLocation().getRelativeDirection(targetLoc));
             if (tileAt(newLocation).getType() == TileType.PATH)
             {
-                setLocation(newLocation);
+                setTargetLoc(newLocation);
             }
+            this.setLocation(getLocation().move(
+                getSpeed(),
+                getLocation().getRelativeDirection(targetLoc)));
         }
     }
 }
