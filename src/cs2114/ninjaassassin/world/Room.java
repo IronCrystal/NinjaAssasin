@@ -37,6 +37,11 @@ public class Room implements Runnable
     //private File file;
     private InputStream inputStream;
 
+    private boolean isTouchingDown;
+
+    private float touchX;
+    private float touchY;
+
     //private Resources resources;
 
     /*private Bitmap background;
@@ -56,6 +61,9 @@ public class Room implements Runnable
         inputStream = is;
         parseFile();
         //createBackgroundImage();
+        setTouchingDown(false);
+        setTouchX(0);
+        setTouchY(0);
         thread = new Thread(this);
         thread.start();
     }
@@ -193,5 +201,68 @@ public class Room implements Runnable
     public Tile[][] getTileMap()
     {
         return tileMap;
+    }
+
+    // ----------------------------------------------------------
+    /**
+     * Returns whether the user is touching the screen
+     * @return true if the user is touching the screen
+     */
+    public boolean isTouchingDown()
+    {
+        return isTouchingDown;
+    }
+
+    // ----------------------------------------------------------
+    /**
+     * Sets whether the user is touching down (only to be used by the screen
+     * class)
+     * @param isTouchingDown whether the user is touching down
+     */
+    public void setTouchingDown(boolean isTouchingDown)
+    {
+        this.isTouchingDown = isTouchingDown;
+    }
+
+    // ----------------------------------------------------------
+    /**
+     * Returns the location of the last location where the user touched
+     * @return touchX the x coordinate
+     */
+    public float getTouchX()
+    {
+        return touchX;
+    }
+
+    // ----------------------------------------------------------
+    /**
+     * Sets the last location where the user touched (only to be used
+     * by the screen class)
+     * @param touchX the x coordinate
+     */
+    public void setTouchX(float touchX)
+    {
+        this.touchX = touchX;
+    }
+
+    // ----------------------------------------------------------
+    /**
+     * Returns the location of the last location where the user touched
+     * @return touchY the y coordinate
+     */
+    public float getTouchY()
+    {
+        return touchY;
+    }
+
+    // ----------------------------------------------------------
+    /**
+     * Sets the last location where the user touched (only to be used
+     * by the screen class)
+     * @param touchY the y coordinate
+     */
+    public void setTouchY(float touchY)
+    {
+        this.touchY = touchY;
     }
 }

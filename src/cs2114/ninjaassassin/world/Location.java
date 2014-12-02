@@ -49,7 +49,7 @@ public class Location
      */
     public Location(int x, int y, int direction)
     {
-        new Location((float)x, (float)y, (float)direction);
+        this((float) x, (float) y, (float)direction);
     }
 
 
@@ -146,7 +146,6 @@ public class Location
             direction);
     }
 
-
     // ----------------------------------------------------------
     /**
      * Sets the direction position of the location.
@@ -235,6 +234,14 @@ public class Location
     {
         return (float)Math.sqrt(Math.pow((double)x - (double)loc.getX(), 2)
             + Math.pow((double)y - (double)loc.getY(), 2));
+    }
+
+    /**
+     * Returns the string representation of the Location
+     * @return string The string
+     */
+    public String toString() {
+        return "(" + this.getX() + ", " + this.getY() + ")";
     }
 
 }

@@ -1,5 +1,9 @@
 package cs2114.ninjaassassin;
 
+import android.util.Log;
+import cs2114.ninjaassassin.drawing.EntityDrawing;
+import cs2114.ninjaassassin.world.Location;
+import cs2114.ninjaassassin.entity.dynamic.Ninja;
 import cs2114.ninjaassassin.world.Room;
 import cs2114.ninjaassassin.world.tile.Tile;
 import cs2114.ninjaassassin.world.tile.TileType;
@@ -18,6 +22,10 @@ public class NinjaAssassinScreen extends ShapeScreen
      * Room
      */
     Room room;
+    /**
+     * Character object
+     */
+    Ninja ninja;
 
     public void initialize() {
         try
@@ -41,6 +49,13 @@ public class NinjaAssassinScreen extends ShapeScreen
                     add(tile);
                 }
             }
+
+            //Create test ninja
+            ninja = new Ninja(new Location(5, 5, 0), "asdef", 3, 3, 3, 3);
+            Log.i("Screen", "The starting location is : " + ninja.getLocation().toString());
+            EntityDrawing image = new EntityDrawing("ninja", sideLength, ninja);
+            ninja.addObserver(image);
+            add(image);
         }
     }
 
@@ -51,7 +66,11 @@ public class NinjaAssassinScreen extends ShapeScreen
      * @param y
      */
     public void onTouchDown(float x, float y) {
-        //TODO
+        if (room != null) {
+            room.setTouchingDown(true);
+            room.setTouchX(x);
+            room.setTouchY(y);
+        }
     }
 
     // ----------------------------------------------------------
@@ -61,6 +80,24 @@ public class NinjaAssassinScreen extends ShapeScreen
      * @param y The y Coordinate
      */
     public void onTouchMove(float x, float y) {
-        //TODO
+        if (room != null) {
+            room.setTouchingDown(true);
+            room.setTouchX(x);
+            room.setTouchY(y);
+        }
+    }
+
+    // ----------------------------------------------------------
+    /**
+     * Place a description of your method here.
+     * @param x
+     * @param y
+     */
+    public void onTouchUp(float x, float y) {
+        if (room != null) {
+            room.setTouchingDown(false);
+            room.setTouchX(x);
+            room.setTouchY(y);
+        }
     }
 }
