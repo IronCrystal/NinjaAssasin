@@ -27,10 +27,16 @@ public class NinjaAssassinScreen extends ShapeScreen
      */
     Ninja ninja;
 
-    public void initialize() {
+    // ----------------------------------------------------------
+    /**
+     * Initializes the level
+     * @param level the level
+     */
+    public void initialize(int level) {
         try
         {
-            room = new Room(getResources().getAssets().open("level1"));
+            Log.i("Screen", "level" + level);
+            room = new Room(getResources().getAssets().open("level" + level));
         }
         catch (IOException e)
         {
@@ -46,6 +52,7 @@ public class NinjaAssassinScreen extends ShapeScreen
                     float right = left + sideLength;
                     float bottom = top + sideLength;
                     Tile tile = new Tile(room.getTileImages()[y][x], left, top, right, bottom, TileType.getTileType(room.getTileImages()[y][x]));
+                    room.getTileMap()[y][x] = tile;
                     add(tile);
                 }
             }

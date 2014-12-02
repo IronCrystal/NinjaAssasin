@@ -23,7 +23,7 @@ public class LevelSelectScreen extends Screen
      * Place a description of your method here.
      */
     public void level1Clicked() {
-        presentScreen(NinjaAssassinScreen.class);
+        presentScreen(NinjaAssassinScreen.class, 1);
         finish();
     }
 }
