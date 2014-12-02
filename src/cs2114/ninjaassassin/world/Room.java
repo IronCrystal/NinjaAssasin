@@ -1,5 +1,6 @@
 package cs2114.ninjaassassin.world;
 
+import cs2114.ninjaassassin.entity.dynamic.DynamicEntity;
 import android.util.Log;
 import cs2114.ninjaassassin.entity.Entity;
 import cs2114.ninjaassassin.entity.dynamic.Ninja;
@@ -59,6 +60,7 @@ public class Room implements Runnable
     public Room(InputStream is) {
         //this.file = file;
         inputStream = is;
+        entities = new ArrayList<Entity>();
         parseFile();
         //createBackgroundImage();
         setTouchingDown(false);
@@ -162,6 +164,7 @@ public class Room implements Runnable
                     //Create ninja
                     tileImages[x / width][x % width] = "tile0";
                     ninja = new Ninja(new Location(x % width, x / width, 0), 0, 0, 0, this);
+                    entities.add(ninja);
                 }
                 else {
                     tileImages[x / width][x % width] = tileList.get(x);
@@ -185,6 +188,12 @@ public class Room implements Runnable
             if (System.currentTimeMillis() - timeLastRun > 1000) {
                 timeLastRun = System.currentTimeMillis();
                 Log.i("Room", "Runnign the thread");
+                for (Entity entity : entities) {
+                    if (entity instanceof DynamicEntity) {
+                        DynamicEntity e = (DynamicEntity) entity;
+                        e.update();
+                    }
+                }
             }
         }
     }
