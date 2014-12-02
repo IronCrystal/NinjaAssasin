@@ -1,5 +1,6 @@
 package cs2114.ninjaassassin.entity.dynamic;
 
+import cs2114.ninjaassassin.graph.ListGraph;
 import cs2114.ninjaassassin.world.tile.TileType;
 import cs2114.ninjaassassin.world.tile.Tile;
 import android.graphics.RectF;
@@ -34,7 +35,7 @@ public class Enemy
     private Stack<Location>      path;
     private Stack<Integer>       intPath;
     private double[]             distances;
-    private Graph                graph;
+    private ListGraph            graph;
     private String               mode;
 
 
@@ -72,7 +73,18 @@ public class Enemy
         super(loc, speed, health, lethality, room);
         this.fieldOfView = fieldOfView;
         this.rangeOfView = rangeOfView;
-        this.graph = graph;
+        this.graph = new ListGraph(0, false);
+        for (int i = 0; i < room.getTileMap().length; i++)
+        {
+            for (int j = 0; j < room.getTileMap()[i].length; j++)
+            {
+                if (room.getTileMap()[i][j].getType() == TileType.PATH)
+                {
+                    // graph.insert(new Edge())
+                }
+            }
+        }
+
         mode = "patrol";
         wayPoints.add(loc); // Add the starting location to the patrol circuit
     }

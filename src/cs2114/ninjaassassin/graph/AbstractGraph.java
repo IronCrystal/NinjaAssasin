@@ -1,11 +1,15 @@
 package cs2114.ninjaassassin.graph;
 
+import cs2114.ninjaassassin.world.Location;
+import java.util.HashMap;
+
 // -------------------------------------------------------------------------
 /**
  * Write a one-sentence summary of your class here. Follow it with additional
  * details about its purpose, what abstraction it represents, and how to use it.
  *
- * @author Elliott
+ * @author Andrew Peace
+ * @author Elliott Fairhurst
  * @version Nov 29, 2014
  */
 
@@ -17,6 +21,7 @@ public abstract class AbstractGraph
     private int     numV;
     /** Flag to indicate whether this is a directed graph */
     private boolean directed;
+    private HashMap<Integer, Location> locMap;
 
 
     // ----------------------------------------------------------
@@ -32,6 +37,7 @@ public abstract class AbstractGraph
     {
         this.numV = numV;
         this.directed = directed;
+        locMap = new HashMap<Integer, Location>();
     }
 
 
