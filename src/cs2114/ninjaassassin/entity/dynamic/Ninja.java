@@ -1,5 +1,7 @@
 package cs2114.ninjaassassin.entity.dynamic;
 
+import cs2114.ninjaassassin.world.tile.TileType;
+import cs2114.ninjaassassin.world.Room;
 import cs2114.ninjaassassin.world.Location;
 
 // -------------------------------------------------------------------------
@@ -14,27 +16,50 @@ import cs2114.ninjaassassin.world.Location;
 public class Ninja
     extends DynamicEntity
 {
+    private Location targetLoc;
+
 
     // ----------------------------------------------------------
     /**
      * Create a new Ninja object.
      *
      * @param loc
-     * @param imageName
-     * @param size
+     *            The location of the ninja
      * @param speed
+     *            The speed of the ninja (distance per update)
      * @param health
+     *            The health of the ninja
      * @param lethality
+     *            The lethality of the ninja
+     * @param targetLoc
+     *            The ninja's target location
+     * @param room
+     *            The room
      */
     public Ninja(
         Location loc,
-        String imageName,
-        int size,
         float speed,
         float health,
-        float lethality)
+        float lethality,
+        Room room)
     {
-        super(loc, speed, health, lethality);
+        super(loc, speed, health, lethality, room);
+        this.targetLoc = loc;
+    }
+
+
+    // ----------------------------------------------------------
+    /**
+     * Sets the target location
+     *
+     * @param tLoc
+     *            The target location
+     */
+    public void setTargetLoc(Location tLoc)
+    {
+        targetLoc = tLoc;
+        setChanged();
+        notifyObservers();
     }
 
 
@@ -42,7 +67,13 @@ public class Ninja
     @Override
     public void update()
     {
-        // Working on this part
+        Location newLocation =
+            getLocation().move(
+                getSpeed(),
+                getLocation().getRelativeDirection(targetLoc));
+        if (tileAt(newLocation).getType() == TileType.PATH)
+        {
+            setLocation(newLocation);
+        }
     }
-
 }

@@ -1,5 +1,7 @@
 package cs2114.ninjaassassin.entity.dynamic;
 
+import cs2114.ninjaassassin.world.tile.Tile;
+import cs2114.ninjaassassin.world.Room;
 import cs2114.ninjaassassin.world.Location;
 import cs2114.ninjaassassin.entity.Entity;
 
@@ -18,6 +20,7 @@ public abstract class DynamicEntity
     private float speed;
     private float health;
     private float lethality;
+    private Room  room;
 
 
     // ----------------------------------------------------------
@@ -32,17 +35,21 @@ public abstract class DynamicEntity
      *            The health of the entity
      * @param lethality
      *            The lethality of the entity
+     * @param room
+     *            The room in which the entity exists
      */
     public DynamicEntity(
         Location loc,
         float speed,
         float health,
-        float lethality)
+        float lethality,
+        Room room)
     {
         super(loc);
         this.speed = speed;
         this.health = health;
         this.lethality = lethality;
+        this.room = room;
     }
 
 
@@ -133,6 +140,18 @@ public abstract class DynamicEntity
 
     // ----------------------------------------------------------
     /**
+     * Gets the room in which the entity exists
+     *
+     * @return The room in which the entity exists
+     */
+    public Room getRoom()
+    {
+        return room;
+    }
+
+
+    // ----------------------------------------------------------
+    /**
      * Attacks a given active entity, reducing its health according to the
      * lethality (health subtracted per attack) of this entity.
      *
@@ -142,6 +161,21 @@ public abstract class DynamicEntity
     public void attack(DynamicEntity target)
     {
         target.setHealth(target.getHealth() - lethality);
+    }
+
+
+    // ----------------------------------------------------------
+    /**
+     * Returns the Tile at a given Location
+     *
+     * @param loc
+     *            The Location
+     * @return The Tile
+     */
+    public Tile tileAt(Location loc)
+    {
+        Tile[][] tiles = room.getTileMap();
+        return tiles[Math.round(loc.getX())][Math.round(loc.getY())];
     }
 
 
