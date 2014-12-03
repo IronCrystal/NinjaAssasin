@@ -1,16 +1,23 @@
 package cs2114.ninjaassassin;
 
-import cs2114.ninjaassassin.entity.dynamic.Enemy;
+import android.widget.Toast;
+import android.content.Context;
+import cs2114.ninjaassassin.entity.dynamic.Target;
+import sofia.graphics.Color;
+import android.graphics.PointF;
 import android.util.Log;
 import android.widget.TextView;
 import cs2114.ninjaassassin.drawing.EntityDrawing;
 import cs2114.ninjaassassin.entity.Entity;
+import cs2114.ninjaassassin.entity.dynamic.Enemy;
+import cs2114.ninjaassassin.entity.dynamic.FieldOfView;
 import cs2114.ninjaassassin.entity.dynamic.Ninja;
 import cs2114.ninjaassassin.world.Room;
 import cs2114.ninjaassassin.world.tile.Tile;
 import cs2114.ninjaassassin.world.tile.TileType;
 import java.io.IOException;
 import sofia.app.ShapeScreen;
+import sofia.graphics.OvalShape;
 // -------------------------------------------------------------------------
 /**
  *  Represents the screen used in the NinjaAssasin app
@@ -34,7 +41,12 @@ public class NinjaAssassinScreen extends ShapeScreen
      */
     public TextView header;
 
-    float sideLength = 0;
+    /**
+     * Size of the images
+     */
+    private float sideLength = 0;
+
+    private int level;
 
     // ----------------------------------------------------------
     /**
@@ -42,6 +54,7 @@ public class NinjaAssassinScreen extends ShapeScreen
      * @param level the level
      */
     public void initialize(int level) {
+        this.level = level;
         try
         {
             Log.i("Screen", "level" + level);
@@ -67,12 +80,7 @@ public class NinjaAssassinScreen extends ShapeScreen
                 }
             }
 
-            //Create test ninja
-            ninja = room.getNinja();
-            Log.i("Screen", "The starting location is : " + ninja.getLocation().toString());
-            EntityDrawing image = new EntityDrawing("ninja", sideLength, ninja);
-            ninja.addObserver(image);
-            add(image);
+
 
             //Create all entities
             for (Entity entity : room.getEntities()) {
@@ -81,8 +89,24 @@ public class NinjaAssassinScreen extends ShapeScreen
                     EntityDrawing i = new EntityDrawing("enemy", sideLength, enemy);
                     enemy.addObserver(i);
                     add(i);
+                    FieldOfView view = new FieldOfView(enemy, sideLength);
+                    enemy.addObserver(view);
+                    add(view);
+                }
+                else if (entity instanceof Target) {
+                    Target target = (Target) entity;
+                    EntityDrawing i = new EntityDrawing("target", sideLength, target);
+                    target.addObserver(i);
+                    add(i);
                 }
             }
+
+          //Create ninja
+            ninja = room.getNinja();
+            Log.i("Screen", "The starting location is : " + ninja.getLocation().toString());
+            EntityDrawing image = new EntityDrawing("ninja", sideLength, ninja);
+            ninja.addObserver(image);
+            add(image);
         }
         else {
             Log.e("Screen", "ROOM IS NULL");
@@ -109,6 +133,16 @@ public class NinjaAssassinScreen extends ShapeScreen
             room.setTouchingDown(true);
             room.setTouchX(x / sideLength);
             room.setTouchY(y / sideLength);
+            if (room.getHasWon()) {
+                Context context = getApplicationContext();
+                CharSequence text = "You beat level " + level;
+                int duration = Toast.LENGTH_LONG;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+                presentScreen(LevelSelectScreen.class);
+                finish();
+            }
         }
     }
 

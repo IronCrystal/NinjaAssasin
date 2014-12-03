@@ -190,6 +190,7 @@ public class Enemy
 
     public void update()
     {
+        Log.i("Enemy", "The mode is " + mode);
         // Set the target location:
         // If this enemy can see the ninja
         Ninja ninja = getRoom().getNinja();
@@ -204,7 +205,11 @@ public class Enemy
             Tile[][] tiles = getRoom().getTileMap();
             Tile currTile;
             boolean lineOfSight = true;
+<<<<<<< HEAD
+            /*while (testLoc.getDistanceFrom(ninja.getLocation()) > 0)
+=======
             while (testLoc.getDistanceFrom(ninja.getLocation()) >= getSpeed())
+>>>>>>> origin/master
             {
                 currTile =
                     tiles[(int)Math.floor(testLoc.getY())][(int)Math
@@ -214,11 +219,16 @@ public class Enemy
                     lineOfSight = false;
                     break;
                 }
+<<<<<<< HEAD
+            }*/
+            Log.i("Enemy", "The guard sees the player!");
+=======
                 testLoc =
                     testLoc.move(
                         getSpeed(),
                         testLoc.getRelativeDirection(ninja.getLocation()));
             }
+>>>>>>> origin/master
             // If there is a clear line of sight, target the ninja
             if (lineOfSight)
             {
