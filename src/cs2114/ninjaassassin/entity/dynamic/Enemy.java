@@ -235,7 +235,6 @@ public class Enemy
     /**
      * Making a fake update just for testing
      */
-<<<<<<< HEAD
     public void update()
     {
         Random rand = new Random();
@@ -245,11 +244,9 @@ public class Enemy
         {
             setLocation(newLocation);
         }
-=======
-    public void update() {
-
->>>>>>> origin/master
     }
+}
+
 
     /*
      * public void update() { // If this enemy can see the ninja Ninja ninja =
@@ -280,4 +277,4 @@ public class Enemy
      * size // If counter > 2*pi radians - field of view, // Set mode to patrol
      * // Break // Move one unit toward the target location }
      */
-}
+
