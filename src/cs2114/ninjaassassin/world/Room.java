@@ -50,6 +50,7 @@ public class Room
     private float                     touchY;
 
     private boolean                   hasWon;
+    private boolean                   hasLost;
 
     // private Resources resources;
 
@@ -278,6 +279,10 @@ public class Room
         long timeLastRun = System.currentTimeMillis();
         while (!hasWon)
         {
+            if (hasLost)
+            {
+                break;
+            }
             if (System.currentTimeMillis() - timeStarted > 1000)
             {
                 if (System.currentTimeMillis() - timeLastRun > 20)
@@ -321,6 +326,31 @@ public class Room
     public boolean getHasWon()
     {
         return hasWon;
+    }
+
+
+    // ----------------------------------------------------------
+    /**
+     * Sets weather the game has been lost.
+     *
+     * @param hasLost
+     *            whether the game has been lost
+     */
+    public void setHasLost(boolean hasLost)
+    {
+        this.hasLost = hasLost;
+    }
+
+
+    // ----------------------------------------------------------
+    /**
+     * Checks whether the game has been lost.
+     *
+     * @return true if the game has been lost
+     */
+    public boolean getHasLost()
+    {
+        return hasLost;
     }
 
 

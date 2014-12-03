@@ -300,17 +300,21 @@ public class Enemy
                 if (coeff > 0)
                 {
                     direction = posDirection;
-                    posDirection += Math.PI / 8;
+                    posDirection += Math.PI / 4;
                 }
                 else
                 {
                     direction = negDirection;
-                    negDirection -= Math.PI / 8;
+                    negDirection -= Math.PI / 4;
                 }
                 coeff *= -1; // Go the other way next time
             }
             this.setLocation(this.getLocation()
                 .move(this.getSpeed(), direction));
+        }
+        if (this.isCloseTo(ninja))
+        {
+            getRoom().setHasLost(true);
         }
         setChanged();
         notifyObservers();
