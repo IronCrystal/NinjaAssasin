@@ -1,5 +1,7 @@
 package cs2114.ninjaassassin.entity.dynamic;
 
+import android.util.Log;
+import cs2114.ninjaassassin.world.tile.TileType;
 import cs2114.ninjaassassin.world.tile.Tile;
 import cs2114.ninjaassassin.world.Room;
 import cs2114.ninjaassassin.world.Location;
@@ -14,13 +16,14 @@ import cs2114.ninjaassassin.entity.Entity;
  * @version Nov 1, 2014
  */
 public abstract class DynamicEntity
-    extends Entity
+extends Entity
 {
 
     private float speed;
     private float health;
     private float lethality;
     private Room  room;
+    private float length;
 
 
     // ----------------------------------------------------------
@@ -175,7 +178,48 @@ public abstract class DynamicEntity
     public Tile tileAt(Location loc)
     {
         Tile[][] tiles = room.getTileMap();
-        return tiles[Math.round(loc.getX())][Math.round(loc.getY())];
+        return tiles[(int) Math.floor(loc.getY())][(int) Math.floor(loc.getX())];
+    }
+
+    // ----------------------------------------------------------
+    /**
+     * Returns whether the entity can move to the specified location
+     * @param loc The location in question
+     * @return true if allowed
+     */
+    public boolean canMoveTo(Location loc) {
+        Tile[][] tiles = room.getTileMap();
+        float x1 = loc.getX(); //Top Left Corner
+        float y1 = loc.getY();
+        float x2 = x1 + 1; //Top Right Corner
+        float y2 = y1;
+        float x3 = x1; //Bottom Left Corner
+        float y3 = y1 + 1;
+        float x4 = x1 + 1; //Bottom Right Corner
+        float y4 = y1 + 1;
+
+        boolean b1, b2, b3, b4 = false;
+        try {
+            Log.i("DynamicEntity", "The size of tiles " + tiles.length);
+            Log.i("DynamicEntity", "The tile at the starting location is " + tiles[18][6]);
+            Log.i("DynamicEntity", "The tile at the ninja starting location is " + tiles[8][7]);
+            Log.i("DynamicEntity", "The tile at a random location is " + tiles[9][7]);
+            b1 = tiles[(int) Math.floor(y1)][(int) Math.floor(x1)].getType() == TileType.PATH;
+            b2 = tiles[(int) Math.floor(y2)][(int) Math.floor(x2)].getType() == TileType.PATH;
+            b3 = tiles[(int) Math.floor(y3)][(int) Math.floor(x3)].getType() == TileType.PATH;
+            b4 = tiles[(int) Math.floor(y4)][(int) Math.floor(x4)].getType() == TileType.PATH;
+            return b1 && b2 && b3 && b4;
+        }catch(ArrayIndexOutOfBoundsException ex) {
+            return false;
+        }
+    }
+
+    public void setLength(float length) {
+        this.length = length;
+    }
+
+    public float getLength() {
+        return length;
     }
 
 

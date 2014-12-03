@@ -1,8 +1,10 @@
 package cs2114.ninjaassassin;
 
-import android.widget.TextView;
+import cs2114.ninjaassassin.entity.dynamic.Enemy;
 import android.util.Log;
+import android.widget.TextView;
 import cs2114.ninjaassassin.drawing.EntityDrawing;
+import cs2114.ninjaassassin.entity.Entity;
 import cs2114.ninjaassassin.entity.dynamic.Ninja;
 import cs2114.ninjaassassin.world.Room;
 import cs2114.ninjaassassin.world.tile.Tile;
@@ -32,6 +34,8 @@ public class NinjaAssassinScreen extends ShapeScreen
      */
     public TextView header;
 
+    float sideLength = 0;
+
     // ----------------------------------------------------------
     /**
      * Initializes the level
@@ -49,7 +53,7 @@ public class NinjaAssassinScreen extends ShapeScreen
             e.printStackTrace();
         }
         if (room != null) {
-            float sideLength = getWidth() / room.getTileImages()[0].length;
+            sideLength = getWidth() / room.getTileImages()[0].length;
 
             for (int y = 0; y < room.getTileImages().length; y++) {
                 for (int x = 0; x < room.getTileImages()[y].length; x++) {
@@ -68,7 +72,18 @@ public class NinjaAssassinScreen extends ShapeScreen
             Log.i("Screen", "The starting location is : " + ninja.getLocation().toString());
             EntityDrawing image = new EntityDrawing("ninja", sideLength, ninja);
             ninja.addObserver(image);
+            ninja.setLength(sideLength);
             add(image);
+
+            //Create all entities
+            for (Entity entity : room.getEntities()) {
+                if (entity instanceof Enemy) {
+                    Enemy enemy = (Enemy) entity;
+                    EntityDrawing i = new EntityDrawing("enemy", sideLength, enemy);
+                    enemy.addObserver(i);
+                    add(i);
+                }
+            }
         }
         else {
             Log.e("Screen", "ROOM IS NULL");
@@ -93,8 +108,8 @@ public class NinjaAssassinScreen extends ShapeScreen
     public void onTouchDown(float x, float y) {
         if (room != null) {
             room.setTouchingDown(true);
-            room.setTouchX(x);
-            room.setTouchY(y);
+            room.setTouchX(x / sideLength);
+            room.setTouchY(y / sideLength);
         }
     }
 
@@ -107,8 +122,8 @@ public class NinjaAssassinScreen extends ShapeScreen
     public void onTouchMove(float x, float y) {
         if (room != null) {
             room.setTouchingDown(true);
-            room.setTouchX(x);
-            room.setTouchY(y);
+            room.setTouchX(x / sideLength);
+            room.setTouchY(y / sideLength);
         }
     }
 
@@ -121,8 +136,8 @@ public class NinjaAssassinScreen extends ShapeScreen
     public void onTouchUp(float x, float y) {
         if (room != null) {
             room.setTouchingDown(false);
-            room.setTouchX(x);
-            room.setTouchY(y);
+            room.setTouchX(x / sideLength);
+            room.setTouchY(y / sideLength);
         }
     }
 }

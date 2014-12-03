@@ -205,7 +205,7 @@ public class Location
      */
     public float getRelativeDirection(Location loc)
     {
-        return (float)Math.atan((loc.getY() - y) / (loc.getX() - x));
+        return (float)Math.atan2((loc.getY() - y), (loc.getX() - x));
     }
 
 

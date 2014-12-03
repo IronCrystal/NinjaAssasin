@@ -1,5 +1,8 @@
 package cs2114.ninjaassassin.world;
 
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import cs2114.ninjaassassin.entity.dynamic.Enemy;
 import cs2114.ninjaassassin.entity.dynamic.DynamicEntity;
 import android.util.Log;
 import cs2114.ninjaassassin.entity.Entity;
@@ -68,7 +71,10 @@ public class Room implements Runnable
         setTouchX(0);
         setTouchY(0);
         thread = new Thread(this);
-        thread.start();
+        //thread.start();
+
+        final ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1);
+        executor.schedule(this, 1, TimeUnit.SECONDS);
     }
 
     // ----------------------------------------------------------
@@ -173,6 +179,12 @@ public class Room implements Runnable
                     ninja = new Ninja(new Location(x % width, x / width, 0), 0.3f, 5f, 1f, this);
                     entities.add(ninja);
                 }
+                else if (tileList.get(x).equalsIgnoreCase("tileE")) {
+                    //Create enemy
+                    tileImages[x / width][x % width] = "tile0";
+                    Enemy enemy = new Enemy(new Location(x % width, x / width, 0), 0.3f, 5f, 1f, this);
+                    entities.add(enemy);
+                }
                 else {
                     tileImages[x / width][x % width] = tileList.get(x);
                 }
@@ -192,7 +204,7 @@ public class Room implements Runnable
     {
         long timeLastRun = System.currentTimeMillis();
         while (true) {
-            if (System.currentTimeMillis() - timeLastRun > 1000) {
+            if (System.currentTimeMillis() - timeLastRun > 20) {
                 timeLastRun = System.currentTimeMillis();
                 Log.i("Room", "Runnign the thread");
                 for (Entity entity : entities) {

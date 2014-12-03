@@ -89,6 +89,23 @@ public class Enemy
         wayPoints.add(loc); // Add the starting location to the patrol circuit
     }
 
+    // ----------------------------------------------------------
+    /**
+     * Temporary Constructor for Testing
+     * @param loc
+     * @param speed
+     * @param health
+     * @param lethality
+     * @param room
+     */
+    public Enemy(Location loc,
+        float speed,
+        float health,
+        float lethality,
+        Room room) {
+        super(loc, speed, health, lethality, room);
+    }
+
 
     // ----------------------------------------------------------
     /**
@@ -284,8 +301,23 @@ public class Enemy
         return intPath;
     }
 
+    /**
+     * Making a fake update just for testing
+     */
+    public void update() {
+        Random rand = new Random();
+        float dir = (float)(rand.nextFloat() * 2 * Math.PI);
+        Location newLocation =
+            getLocation().move(
+                getSpeed(),
+                dir);
+        if (canMoveTo(newLocation)) {
+            setLocation(newLocation);
+        }
+    }
 
-    public void update()
+
+    /*public void update()
     {
         // If this enemy can see the ninja
         Ninja ninja = getRoom().getNinja();
@@ -348,5 +380,5 @@ public class Enemy
         // Set mode to patrol
         // Break
         // Move one unit toward the target location
-    }
+    }*/
 }
