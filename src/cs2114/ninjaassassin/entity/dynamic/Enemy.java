@@ -269,6 +269,10 @@ public class Enemy
                     patrolPath.offer(patrolPath.poll());
                     setTargetLoc(patrolPath.peek());
                 }
+                else
+                {
+                    setTargetLoc(patrolPath.peek());
+                }
             }
         }
         // Once a target is selected, turn and move toward it
@@ -281,6 +285,11 @@ public class Enemy
             this.setLocation(this.getLocation().move(
                 this.getSpeed(),
                 getLocation().getRelativeDirection(targetLoc)));
+        }
+        // If there's something in the way
+        else
+        {
+            // Under construction
         }
         setChanged();
         notifyObservers();
