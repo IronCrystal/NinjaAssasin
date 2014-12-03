@@ -1,5 +1,7 @@
 package cs2114.ninjaassassin.entity.dynamic;
 
+import java.util.Stack;
+import cs2114.ninjaassassin.queue.Queue;
 import android.util.Log;
 import cs2114.ninjaassassin.graph.ListGraph;
 import cs2114.ninjaassassin.world.tile.TileType;
@@ -10,7 +12,6 @@ import cs2114.ninjaassassin.entity.Entity;
 import cs2114.ninjaassassin.world.Room;
 import cs2114.ninjaassassin.graph.Graph;
 import cs2114.ninjaassassin.entity.dynamic.DynamicEntity;
-import java.util.*;
 import cs2114.ninjaassassin.world.Location;
 
 // -------------------------------------------------------------------------
@@ -68,30 +69,8 @@ public class Enemy
         this.fieldOfView = fieldOfView;
         this.rangeOfView = rangeOfView;
         mode = "patrol";
-        patrolPath.add(loc); // Add the starting location to the patrol circuit
+        patrolPath = new Queue<Location>();
     }
-
-
-    // ----------------------------------------------------------
-    /**
-     * Temporary Constructor for Testing
-     *
-     * @param loc
-     * @param speed
-     * @param health
-     * @param lethality
-     * @param room
-     */
-    public Enemy(
-        Location loc,
-        float speed,
-        float health,
-        float lethality,
-        Room room)
-    {
-        super(loc, speed, health, lethality, room);
-    }
-
 
     // ----------------------------------------------------------
     /**
@@ -186,7 +165,7 @@ public class Enemy
      */
     public void addWayPoint(Location wayPoint)
     {
-        patrolPath.add(wayPoint);
+        patrolPath.offer(wayPoint);
         setChanged();
         notifyObservers();
     }
