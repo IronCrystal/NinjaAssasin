@@ -38,6 +38,7 @@ public abstract class AbstractGraph
         this.numV = numV;
         this.directed = directed;
         locMap = new HashMap<Integer, Location>();
+        //locMap.
     }
 
 
@@ -53,5 +54,7 @@ public abstract class AbstractGraph
     {
         return directed;
     }
+
+
 
 }
