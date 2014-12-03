@@ -121,4 +121,16 @@ public class Queue<E>
             return front.data;
         }
     }
+
+
+    // ----------------------------------------------------------
+    /**
+     * Determines whether or not the queue is empty.
+     *
+     * @return true If the queue is empty
+     */
+    public boolean isEmpty()
+    {
+        return front == null;
+    }
 }
