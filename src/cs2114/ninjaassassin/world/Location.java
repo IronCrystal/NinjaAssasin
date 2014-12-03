@@ -83,54 +83,6 @@ public class Location
 
     // ----------------------------------------------------------
     /**
-     * Return a new location one space to the north.
-     *
-     * @return A new location one space to the north
-     */
-    public Location north()
-    {
-        return new Location(x, y - 1, direction);
-    }
-
-
-    // ----------------------------------------------------------
-    /**
-     * Return a new location one space to the south.
-     *
-     * @return A new location one space to the south
-     */
-    public Location south()
-    {
-        return new Location(x, y + 1, direction);
-    }
-
-
-    // ----------------------------------------------------------
-    /**
-     * Return a new location one space to the east.
-     *
-     * @return A new location one space to the east
-     */
-    public Location east()
-    {
-        return new Location(x + 1, y, direction);
-    }
-
-
-    // ----------------------------------------------------------
-    /**
-     * Return a new location one space to the west.
-     *
-     * @return A new location one space to the west
-     */
-    public Location west()
-    {
-        return new Location(x - 1, y, direction);
-    }
-
-
-    // ----------------------------------------------------------
-    /**
      * Move a given distance in a given direction
      *
      * @param distance
