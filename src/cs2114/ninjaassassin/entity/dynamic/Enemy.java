@@ -290,6 +290,8 @@ public class Enemy
         {
             float direction =
                 this.getLocation().getRelativeDirection(targetLoc);
+            float posDirection = direction;
+            float negDirection = posDirection;
             float coeff = 1;
             while (!this.canMoveTo(this.getLocation().move(
                 this.getSpeed(),
@@ -297,9 +299,14 @@ public class Enemy
             {
                 if (coeff > 0)
                 {
-                    direction += Math.PI / 8;
+                    direction = posDirection;
+                    posDirection += Math.PI / 8;
                 }
-                direction *= coeff;
+                else
+                {
+                    direction = negDirection;
+                    negDirection -= Math.PI / 8;
+                }
                 coeff *= -1; // Go the other way next time
             }
             this.setLocation(this.getLocation()
