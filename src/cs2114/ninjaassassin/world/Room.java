@@ -20,7 +20,8 @@ import java.util.List;
 /**
  * Class represents the current level.
  *
- * @author Andrew Peace
+ * @author Andrew Peace (apeace)
+ * @author Elliott Fairhurst (edf203)
  * @version Nov 1, 2014
  */
 public class Room
@@ -231,7 +232,7 @@ public class Room
                             0.3f,
                             5f,
                             1f,
-                            (float) (Math.PI / 2),
+                            (float)(Math.PI / 4),
                             100f,
                             this);
                     entities.add(enemy);
@@ -243,9 +244,16 @@ public class Room
                     enemyPatrolPoints.put(pointName, new Location(x % width, x
                         / width, 0));
                 }
-                else if (tileList.get(x).equalsIgnoreCase("tileT")) {
+                else if (tileList.get(x).equalsIgnoreCase("tileT"))
+                {
                     tileImages[x / width][x % width] = "tile0";
-                    Target target = new Target(new Location(x % width, x / width, 0), 0.5f, 1f, 1f,this);
+                    Target target =
+                        new Target(
+                            new Location(x % width, x / width, 0),
+                            0.5f,
+                            1f,
+                            1f,
+                            this);
                     entities.add(target);
                 }
                 else
@@ -287,24 +295,31 @@ public class Room
                 }
             }
         }
-        //Win the game
+        // Win the game
     }
+
 
     // ----------------------------------------------------------
     /**
      * Sets whether the room has been completed
-     * @param hasWon True if room complete
+     *
+     * @param hasWon
+     *            True if room complete
      */
-    public void setHasWon(boolean hasWon) {
+    public void setHasWon(boolean hasWon)
+    {
         this.hasWon = hasWon;
     }
+
 
     // ----------------------------------------------------------
     /**
      * Returns whether the room has been completed
+     *
      * @return true if it has been completed
      */
-    public boolean getHasWon() {
+    public boolean getHasWon()
+    {
         return hasWon;
     }
 

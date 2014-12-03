@@ -9,10 +9,10 @@ import cs2114.ninjaassassin.entity.Entity;
 
 // -------------------------------------------------------------------------
 /**
- * Class represents an active entity. An active entity is anything that moves.
+ * Class represents a dynamic entity. A dynamic entity is anything that moves.
  *
- * @author Andrew Peace
- * @author Elliott Fairhurst
+ * @author Andrew Peace (apeace)
+ * @author Elliott Fairhurst (edf203)
  * @version Nov 1, 2014
  */
 public abstract class DynamicEntity

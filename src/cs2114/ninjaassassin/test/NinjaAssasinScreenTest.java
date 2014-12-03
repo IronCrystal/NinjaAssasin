@@ -6,17 +6,21 @@ import cs2114.ninjaassassin.NinjaAssassinScreen;
 
 // -------------------------------------------------------------------------
 /**
- * Write a one-sentence summary of your class here. Follow it with additional
- * details about its purpose, what abstraction it represents, and how to use it.
+ * Contains test methods for the NinjaAssassinScreen class.
  *
- * @author Andrew Peace
+ * @author Andrew Peace (apeace)
+ * @author Elliott Fairhurst (edf203)
  * @version Nov 2, 2014
  */
 public class NinjaAssasinScreenTest
     extends student.AndroidTestCase<NinjaAssassinScreen>
 {
 
+    /**
+     * shapeView for use in testing
+     */
     public ShapeView shapeView;
+
 
     // ----------------------------------------------------------
     /**
@@ -28,18 +32,23 @@ public class NinjaAssasinScreenTest
     }
 
 
+    /**
+     * Sets up a new test case.
+     */
     public void setUp()
     {
         // Nothing to do here
     }
 
+
     // ----------------------------------------------------------
     /**
      * Tests the touch down method
      */
-    public void testTouchDown() {
+    public void testTouchDown()
+    {
         touchDown(shapeView, 2, 2);
         assertNull(getScreen().getRoom());
-        //assertTrue(getScreen().getRoom().isTouchingDown());
+        // assertTrue(getScreen().getRoom().isTouchingDown());
     }
 }

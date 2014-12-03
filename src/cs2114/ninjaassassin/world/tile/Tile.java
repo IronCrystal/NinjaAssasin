@@ -5,27 +5,44 @@ import sofia.graphics.RectangleShape;
 
 // -------------------------------------------------------------------------
 /**
- *  Represents a tile in a room
+ * Represents a tile in a room
  *
- *  @author Andrew Peace
- *  @version Nov 1, 2014
+ * @author Andrew Peace (apeace)
+ * @author Elliott Fairhurst (edf203)
+ * @version Nov 1, 2014
  */
-public class Tile extends RectangleShape
+public class Tile
+    extends RectangleShape
 {
 
     private TileType type;
+
+
     // ----------------------------------------------------------
     /**
      * Create a new Tile object.
-     * @param image The tile's image
-     * @param left The left position of the tile
-     * @param top The top position of the tile
-     * @param right The right position of the tile
-     * @param bottom The bottom position of the tile
-     * @param type The Tile Type
+     *
+     * @param image
+     *            The tile's image
+     * @param left
+     *            The left position of the tile
+     * @param top
+     *            The top position of the tile
+     * @param right
+     *            The right position of the tile
+     * @param bottom
+     *            The bottom position of the tile
+     * @param type
+     *            The Tile Type
      */
-    public Tile(String image, float left,
-            float top, float right, float bottom, TileType type) {
+    public Tile(
+        String image,
+        float left,
+        float top,
+        float right,
+        float bottom,
+        TileType type)
+    {
         super(left, top, right, bottom);
         setStrokeWidth(0.0);
         this.setColor(Color.clear);
@@ -33,9 +50,11 @@ public class Tile extends RectangleShape
         this.setType(type);
     }
 
+
     // ----------------------------------------------------------
     /**
      * Returns the type of tile this is.
+     *
      * @return type The TileType
      */
     public TileType getType()
@@ -43,9 +62,12 @@ public class Tile extends RectangleShape
         return type;
     }
 
+
     /**
      * Sets the type (TileType) of this tile.
-     * @param type The tile type
+     *
+     * @param type
+     *            The tile type
      */
     public void setType(TileType type)
     {

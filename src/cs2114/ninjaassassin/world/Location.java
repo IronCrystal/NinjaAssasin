@@ -1,14 +1,13 @@
 package cs2114.ninjaassassin.world;
 
 import cs2114.ninjaassassin.entity.dynamic.DynamicEntity;
-import cs2114.ninjaassassin.entity.Entity;
 
 // -------------------------------------------------------------------------
 /**
  * Class represents an (x, y) coordinate in a room with a direction.
  *
- * @author Andrew Peace
- * @author Elliott Fairhurst
+ * @author Andrew Peace (apeace)
+ * @author Elliott Fairhurst (edf203)
  * @version Nov 1, 2014
  */
 public class Location

@@ -19,7 +19,8 @@ import cs2114.ninjaassassin.world.Location;
  * work their way randomly through the map until the player is spotted again.
  * Enemies are capable of ranged attacks.
  *
- * @author Elliott Fairhurst
+ * @author Andrew Peace (apeace)
+ * @author Elliott Fairhurst (edf203)
  * @version Nov 1, 2014
  */
 
@@ -203,6 +204,7 @@ public class Enemy
                         getSpeed(),
                         testLoc.getRelativeDirection(ninja.getLocation()));
             }
+
             Log.i("Enemy", "The guard sees the player!");
             // If there is a clear line of sight, target the ninja
             if (lineOfSight)
@@ -229,6 +231,16 @@ public class Enemy
                 && currentRotation >= (Math.PI * 2) - fieldOfView)
             {
                 mode = Mode.PATROL;
+                // Teleport back to the path
+
+            }
+            else if (mode == Mode.PURSUIT)
+            {
+                /*
+                 * if (!patrolPath.isEmpty()) {
+                 * this.setLocation(patrolPath.peek());
+                 * patrolPath.offer(patrolPath.poll()); }
+                 */
             }
             // If the enemy is in patrol mode,
             if (mode == Mode.PATROL)

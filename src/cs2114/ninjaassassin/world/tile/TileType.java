@@ -2,10 +2,10 @@ package cs2114.ninjaassassin.world.tile;
 
 // -------------------------------------------------------------------------
 /**
- * Write a one-sentence summary of your class here. Follow it with additional
- * details about its purpose, what abstraction it represents, and how to use it.
+ * Represents possible types of tiles in a room.
  *
- * @author Elliott Fairhurst
+ * @author Andrew Peace (apeace)
+ * @author Elliott Fairhurst (edf203)
  * @version Nov 2, 2014
  */
 
@@ -22,28 +22,20 @@ public enum TileType
     /**
      * Represents a tile outside the map
      */
-    INVALID_TILE,
-    /**
-     * Represents a path tile not yet explored by the path finder
-     */
-    UNEXPLORED,
-    /**
-     * Represents a failed path for the path finder
-     */
-    FAILED_PATH,
-    /**
-     * Represents the current path of the path finder
-     */
-    CURRENT_PATH;
+    INVALID_TILE;
 
     // ----------------------------------------------------------
     /**
      * Returns the tile's type whether it is a path or a wall
-     * @param imageName The image name
+     *
+     * @param imageName
+     *            The image name
      * @return type The tile type
      */
-    public static TileType getTileType(String imageName) {
-        if (imageName.equalsIgnoreCase("tile0")) {
+    public static TileType getTileType(String imageName)
+    {
+        if (imageName.equalsIgnoreCase("tile0"))
+        {
             return PATH;
         }
         return WALL;

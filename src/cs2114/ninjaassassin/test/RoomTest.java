@@ -4,10 +4,10 @@ import cs2114.ninjaassassin.world.Room;
 
 // -------------------------------------------------------------------------
 /**
- * Write a one-sentence summary of your class here. Follow it with additional
- * details about its purpose, what abstraction it represents, and how to use it.
+ * Contains test methods for the room.
  *
- * @author Andrew Peace
+ * @author Andrew Peace (apeace)
+ * @author Elliott Fairhurst (edf203)
  * @version Nov 2, 2014
  */
 public class RoomTest
@@ -15,6 +15,8 @@ public class RoomTest
 {
 
     Room room;
+
+
     // ----------------------------------------------------------
     /**
      * Create a new RoomTest object.
@@ -25,6 +27,9 @@ public class RoomTest
     }
 
 
+    /**
+     * Sets up a new test case.
+     */
     public void setUp()
     {
         // TODO Add initialization code

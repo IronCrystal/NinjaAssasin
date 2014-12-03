@@ -3,8 +3,6 @@ package cs2114.ninjaassassin;
 import android.widget.Toast;
 import android.content.Context;
 import cs2114.ninjaassassin.entity.dynamic.Target;
-import sofia.graphics.Color;
-import android.graphics.PointF;
 import android.util.Log;
 import android.widget.TextView;
 import cs2114.ninjaassassin.drawing.EntityDrawing;

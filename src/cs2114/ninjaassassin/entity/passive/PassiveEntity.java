@@ -7,7 +7,8 @@ import cs2114.ninjaassassin.entity.Entity;
 /**
  * Class represents a passive entity. A passive entity is an entity in the room
  * which does not act, but can be acted upon. Instances include walls,
- * obstacles, or power-ups.
+ * obstacles, or power-ups. NOTE: This was a planned feature that may be
+ * implemented in future updates. It is not used in the current version.
  *
  * @author Andrew Peace
  * @author Elliott Fairhurst

@@ -2,12 +2,11 @@ package cs2114.ninjaassassin.test;
 
 // -------------------------------------------------------------------------
 /**
- *  Write a one-sentence summary of your class here.
- *  Follow it with additional details about its purpose, what abstraction
- *  it represents, and how to use it.
+ * Contains test methods for the Location class.
  *
- *  @author Andrew Peace
- *  @version Nov 2, 2014
+ * @author Andrew Peace (apeace)
+ * @author Elliott Fairhurst (edf203)
+ * @version Nov 2, 2014
  */
 public class LocationTest
     extends student.TestCase
@@ -23,6 +22,9 @@ public class LocationTest
     }
 
 
+    /**
+     * Sets up a new test case.
+     */
     public void setUp()
     {
         // TODO Add initialization code

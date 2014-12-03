@@ -7,6 +7,8 @@ package cs2114.ninjaassassin.queue;
  * @author Andrew Peace (apeace)
  * @author Elliott Fairhurst (edf203)
  * @version Dec 3, 2014
+ * @param <E>
+ *            The data type stored in the queue
  */
 
 public class Queue<E>
@@ -18,6 +20,8 @@ public class Queue<E>
      * @author Andrew Peace (apeace)
      * @author Elliott Fairhurst (edf203)
      * @version Dec 3, 2014
+     * @param <E>
+     *            The date type stored in the node
      */
 
     private static class Node<E>
