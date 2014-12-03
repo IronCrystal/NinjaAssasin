@@ -2,7 +2,6 @@ package cs2114.ninjaassassin.drawing;
 
 import android.util.Log;
 import cs2114.ninjaassassin.entity.Entity;
-import cs2114.ninjaassassin.world.Location;
 import java.util.Observable;
 import java.util.Observer;
 import sofia.graphics.RectangleShape;
@@ -50,5 +49,14 @@ public class EntityDrawing extends RectangleShape implements Observer {
             Log.i("EntityDrawing", "The ninja is being displayed at " + this.getPosition().toString());
             //this.setPosition(loc.getX(), loc.getY());
         }
+    }
+
+    // ----------------------------------------------------------
+    /**
+     * Returns the entity attached to this drawing
+     * @return entity The Entity
+     */
+    public Entity getEntity() {
+        return entity;
     }
 }
