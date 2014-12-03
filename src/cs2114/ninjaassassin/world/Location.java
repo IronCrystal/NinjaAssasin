@@ -250,13 +250,28 @@ public class Location
      * @param ent
      *            The given entity
      * @param loc
-     *            The given location
+     *            The given location (not the entity's location)
      * @return true if the given location is within the given entity's speed of
      *         this location
      */
     public boolean isCloseTo(DynamicEntity ent, Location loc)
     {
         return getDistanceFrom(loc) <= ent.getSpeed();
+    }
+
+
+    // ----------------------------------------------------------
+    /**
+     * Checks if this location is within one movement of a given entity from
+     * that entity.
+     *
+     * @param ent
+     *            The entity
+     * @return true if this location is close to the given entity
+     */
+    public boolean isCloseTo(DynamicEntity ent)
+    {
+        return getDistanceFrom(ent.getLocation()) <= ent.getSpeed();
     }
 
 

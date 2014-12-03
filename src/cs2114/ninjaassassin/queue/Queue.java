@@ -2,10 +2,10 @@ package cs2114.ninjaassassin.queue;
 
 // -------------------------------------------------------------------------
 /**
- * Write a one-sentence summary of your class here. Follow it with additional
- * details about its purpose, what abstraction it represents, and how to use it.
+ * Represents a queue for use in NinjaAssassin.
  *
- * @author Elliott
+ * @author Andrew Peace (apeace)
+ * @author Elliott Fairhurst (edf203)
  * @version Dec 3, 2014
  */
 
@@ -13,11 +13,10 @@ public class Queue<E>
 {
     // -------------------------------------------------------------------------
     /**
-     * Write a one-sentence summary of your class here. Follow it with
-     * additional details about its purpose, what abstraction it represents, and
-     * how to use it.
+     * Represents a node for use in Queue.
      *
-     * @author Elliott
+     * @author Andrew Peace (apeace)
+     * @author Elliott Fairhurst (edf203)
      * @version Dec 3, 2014
      */
 

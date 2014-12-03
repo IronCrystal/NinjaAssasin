@@ -7,8 +7,8 @@ import cs2114.ninjaassassin.world.Location;
 /**
  * Class represents entities in the room.
  *
- * @author Andrew Peace
- * @author Elliott Fairhurst
+ * @author Andrew Peace (apeace)
+ * @author Elliott Fairhurst (edf203)
  * @version Nov 1, 2014
  */
 public abstract class Entity

@@ -215,13 +215,15 @@ public class Enemy
         else
         {
             // If the enemy is in pursuit mode and has run out of target points,
-            if (mode == Mode.PURSUIT && getLocation().equals(targetLoc)
+            if (mode == Mode.PURSUIT
+                && getLocation().isCloseTo(this, targetLoc)
                 && currentRotation < (Math.PI * 2) - fieldOfView)
             {
                 getLocation().setDirection(
                     getLocation().getDirection() + fieldOfView / 4);
                 currentRotation += fieldOfView / 4;
             }
+            //
             else if (mode == Mode.PURSUIT
                 && getLocation().isCloseTo(this, targetLoc)
                 && currentRotation >= (Math.PI * 2) - fieldOfView)
