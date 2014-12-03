@@ -1,11 +1,9 @@
 package cs2114.ninjaassassin.world;
 
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import cs2114.ninjaassassin.entity.dynamic.Enemy;
-import cs2114.ninjaassassin.entity.dynamic.DynamicEntity;
 import android.util.Log;
 import cs2114.ninjaassassin.entity.Entity;
+import cs2114.ninjaassassin.entity.dynamic.DynamicEntity;
+import cs2114.ninjaassassin.entity.dynamic.Enemy;
 import cs2114.ninjaassassin.entity.dynamic.Ninja;
 import cs2114.ninjaassassin.world.tile.Tile;
 import java.io.BufferedReader;
@@ -38,6 +36,7 @@ public class Room implements Runnable
     private String name = "";
 
     private HashMap<Entity, Location> enemyStartLocations;
+    private HashMap<String, Location> enemyPatrolPoints;
 
     //private File file;
     private InputStream inputStream;
@@ -55,6 +54,7 @@ public class Room implements Runnable
     //Testing
     //private TestEntity test;
     private Thread thread;
+    private long timeStarted;
 
     // ----------------------------------------------------------
     /**
@@ -65,16 +65,18 @@ public class Room implements Runnable
         //this.file = file;
         inputStream = is;
         entities = new ArrayList<Entity>();
+        enemyPatrolPoints = new HashMap<String, Location>();
         parseFile();
         //createBackgroundImage();
         setTouchingDown(false);
         setTouchX(0);
         setTouchY(0);
         thread = new Thread(this);
-        //thread.start();
+        timeStarted = System.currentTimeMillis();
+        thread.start();
 
-        final ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1);
-        executor.schedule(this, 1, TimeUnit.SECONDS);
+        //final ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1);
+        //executor.schedule(this, 1, TimeUnit.SECONDS);
     }
 
     // ----------------------------------------------------------
@@ -185,6 +187,11 @@ public class Room implements Runnable
                     Enemy enemy = new Enemy(new Location(x % width, x / width, 0), 0.3f, 5f, 1f, this);
                     entities.add(enemy);
                 }
+                else if (tileList.get(x).startsWith("tileP")) {
+                    tileImages[x / width][x % width] = "tile0";
+                    String pointName = tileList.get(x).substring(4);
+                    enemyPatrolPoints.put(pointName, new Location(x % width, x / width, 0));
+                }
                 else {
                     tileImages[x / width][x % width] = tileList.get(x);
                 }
@@ -204,13 +211,15 @@ public class Room implements Runnable
     {
         long timeLastRun = System.currentTimeMillis();
         while (true) {
-            if (System.currentTimeMillis() - timeLastRun > 20) {
-                timeLastRun = System.currentTimeMillis();
-                Log.i("Room", "Runnign the thread");
-                for (Entity entity : entities) {
-                    if (entity instanceof DynamicEntity) {
-                        DynamicEntity e = (DynamicEntity) entity;
-                        e.update();
+            if (System.currentTimeMillis() - timeStarted > 600) {
+                if (System.currentTimeMillis() - timeLastRun > 20) {
+                    timeLastRun = System.currentTimeMillis();
+                    Log.i("Room", "Runnign the thread");
+                    for (Entity entity : entities) {
+                        if (entity instanceof DynamicEntity) {
+                            DynamicEntity e = (DynamicEntity) entity;
+                            e.update();
+                        }
                     }
                 }
             }
@@ -308,5 +317,14 @@ public class Room implements Runnable
     public String getName()
     {
         return name;
+    }
+
+    // ----------------------------------------------------------
+    /**
+     * Returns the hashmap of the enemy patrol points
+     * @return enemyPatrolPoints the hashmap
+     */
+    public HashMap<String, Location> getEnemyPatrolPoints() {
+        return enemyPatrolPoints;
     }
 }

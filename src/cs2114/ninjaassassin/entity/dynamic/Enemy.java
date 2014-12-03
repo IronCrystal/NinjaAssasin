@@ -1,5 +1,6 @@
 package cs2114.ninjaassassin.entity.dynamic;
 
+import android.util.Log;
 import cs2114.ninjaassassin.graph.ListGraph;
 import cs2114.ninjaassassin.world.tile.TileType;
 import cs2114.ninjaassassin.world.tile.Tile;
@@ -234,6 +235,7 @@ public class Enemy
     /**
      * Making a fake update just for testing
      */
+<<<<<<< HEAD
     public void update()
     {
         Random rand = new Random();
@@ -243,6 +245,10 @@ public class Enemy
         {
             setLocation(newLocation);
         }
+=======
+    public void update() {
+
+>>>>>>> origin/master
     }
 
     /*
