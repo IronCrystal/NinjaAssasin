@@ -232,7 +232,8 @@ public class Enemy
                     getLocation().getDirection() + fieldOfView / 4);
                 currentRotation += fieldOfView / 4;
             }
-            else if (mode == Mode.PURSUIT && getLocation().equals(targetLoc)
+            else if (mode == Mode.PURSUIT
+                && getLocation().isCloseTo(this, targetLoc)
                 && currentRotation >= (Math.PI * 2) - fieldOfView)
             {
                 mode = Mode.PATROL;
@@ -254,7 +255,7 @@ public class Enemy
                     targetLoc = patrolPath.peek();
                 }
                 // If a patrol waypoint is reached,
-                else if (getLocation().equals(targetLoc))
+                else if (this.isCloseTo(targetLoc))
                 {
                     // Target the next point and move the last one to the back
                     patrolPath.offer(patrolPath.poll());

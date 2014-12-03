@@ -1,5 +1,8 @@
 package cs2114.ninjaassassin.world;
 
+import cs2114.ninjaassassin.entity.dynamic.DynamicEntity;
+import cs2114.ninjaassassin.entity.Entity;
+
 // -------------------------------------------------------------------------
 /**
  * Class represents an (x, y) coordinate in a room with a direction.
@@ -236,6 +239,24 @@ public class Location
     {
         return (float)Math.sqrt(Math.pow((double)x - (double)loc.getX(), 2)
             + Math.pow((double)y - (double)loc.getY(), 2));
+    }
+
+
+    // ----------------------------------------------------------
+    /**
+     * Checks if a given location is within a given entity's speed of this
+     * location.
+     *
+     * @param ent
+     *            The given entity
+     * @param loc
+     *            The given location
+     * @return true if the given location is within the given entity's speed of
+     *         this location
+     */
+    public boolean isCloseTo(DynamicEntity ent, Location loc)
+    {
+        return getDistanceFrom(loc) <= ent.getSpeed();
     }
 
 

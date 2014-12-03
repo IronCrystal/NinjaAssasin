@@ -11,7 +11,8 @@ import cs2114.ninjaassassin.world.Location;
  * @author Elliott Fairhurst
  * @version Nov 1, 2014
  */
-public abstract class Entity extends Observable
+public abstract class Entity
+    extends Observable
 {
     private Location location;
 
