@@ -205,7 +205,7 @@ public class Enemy
             Tile[][] tiles = getRoom().getTileMap();
             Tile currTile;
             boolean lineOfSight = true;
-            while (testLoc.getDistanceFrom(ninja.getLocation()) >= getSpeed())
+            /*while (testLoc.getDistanceFrom(ninja.getLocation()) >= getSpeed())
             {
                 currTile =
                     tiles[(int)Math.floor(testLoc.getY())][(int)Math
@@ -215,7 +215,7 @@ public class Enemy
                     lineOfSight = false;
                     break;
                 }
-            }
+            }*/
             Log.i("Enemy", "The guard sees the player!");
             testLoc =
                 testLoc.move(
@@ -244,6 +244,14 @@ public class Enemy
                 && currentRotation >= (Math.PI * 2) - fieldOfView)
             {
                 mode = Mode.PATROL;
+                //Teleport back to the path
+
+            }
+            else if (mode == Mode.PURSUIT) {
+                if (!patrolPath.isEmpty()) {
+                    this.setLocation(patrolPath.peek());
+                    patrolPath.offer(patrolPath.poll());
+                }
             }
             // If the enemy is in patrol mode,
             if (mode == Mode.PATROL)
