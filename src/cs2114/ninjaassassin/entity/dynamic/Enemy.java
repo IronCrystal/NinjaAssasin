@@ -2,15 +2,9 @@ package cs2114.ninjaassassin.entity.dynamic;
 
 import java.util.Stack;
 import cs2114.ninjaassassin.queue.Queue;
-import android.util.Log;
-import cs2114.ninjaassassin.graph.ListGraph;
 import cs2114.ninjaassassin.world.tile.TileType;
 import cs2114.ninjaassassin.world.tile.Tile;
-import android.graphics.RectF;
-import sofia.graphics.Drawing;
-import cs2114.ninjaassassin.entity.Entity;
 import cs2114.ninjaassassin.world.Room;
-import cs2114.ninjaassassin.graph.Graph;
 import cs2114.ninjaassassin.entity.dynamic.DynamicEntity;
 import cs2114.ninjaassassin.world.Location;
 
@@ -34,7 +28,7 @@ public class Enemy
     private float           rangeOfView;
     private Location        targetLoc;
     private Queue<Location> patrolPath;
-    private String          mode;
+    private Mode            mode;
 
 
     // ----------------------------------------------------------
@@ -68,9 +62,10 @@ public class Enemy
         super(loc, speed, health, lethality, room);
         this.fieldOfView = fieldOfView;
         this.rangeOfView = rangeOfView;
-        mode = "patrol";
+        mode = Mode.PATROL;
         patrolPath = new Queue<Location>();
     }
+
 
     // ----------------------------------------------------------
     /**
@@ -170,6 +165,7 @@ public class Enemy
         notifyObservers();
     }
 
+
     // ----------------------------------------------------------
     /**
      * Finds a path to the specified target location.
@@ -185,48 +181,70 @@ public class Enemy
     }
 
 
-    /**
-     * Making a fake update just for testing
-     */
     public void update()
     {
-        Random rand = new Random();
-        float dir = (float)(rand.nextFloat() * 2 * Math.PI);
-        Location newLocation = getLocation().move(getSpeed(), dir);
-        if (canMoveTo(newLocation))
+        // If this enemy can see the ninja
+        Ninja ninja = getRoom().getNinja();
+        if ((ninja.getLocation().getDistanceFrom(this.getLocation()) <= rangeOfView)
+            && (ninja.getLocation().getRelativeDirection(this.getLocation()) <= getLocation()
+                .getDirection() + fieldOfView / 2)
+            && (ninja.getLocation().getRelativeDirection(this.getLocation()) >= getLocation()
+                .getDirection() - fieldOfView / 2))
         {
-            setLocation(newLocation);
+            // Verify clear line of sight
+            Location testLoc = this.getLocation();
+            Tile[][] tiles = getRoom().getTileMap();
+            Tile currTile;
+            boolean lineOfSight = true;
+            while (testLoc.getDistanceFrom(ninja.getLocation()) > 0)
+            {
+                currTile =
+                    tiles[Math.round(testLoc.getX())][Math
+                        .round(testLoc.getY())];
+                if (currTile.getType() == TileType.PATH)
+                {
+                    lineOfSight = false;
+                    break;
+                }
+            }
+            // If there is a clear line of sight, target the ninja
+            if (lineOfSight)
+            {
+                mode = Mode.PURSUIT;
+                this.setTargetLoc(ninja.getLocation());
+                // Path find
+            }
         }
+        // Turn toward the ninja
+        this.getLocation().setDirection(
+            this.getLocation().getRelativeDirection(targetLoc));
+        this.setLocation(this.getLocation().move(
+            this.getSpeed(),
+            getLocation().getRelativeDirection(targetLoc)));
+        setChanged();
+        notifyObservers();
+
+// Psuedocode:
+
+// Check for ninja
+// If ninja is spotted,
+// Mode = pursuit
+// Set target location to ninja's position
+// Find path to target location and store in stack
+// Set target location to top of stack
+// If not,
+// If mode = patrol,
+// Set target location to next patrol location
+// Change viewing direction sinusoidally
+// If mode = pursuit,
+// If the stack is not empty,
+// Set target location to top of stack
+// If the stack is empty,
+// Rotate clockwise one unit
+// Counter += rotation unit size
+// If counter > 2*pi radians - field of view,
+// Set mode to patrol
+// Break
+// Move one unit toward the target location
     }
 }
-
-/*
- * public void update() { // If this enemy can see the ninja Ninja ninja =
- * getRoom().getNinja(); if
- * ((ninja.getLocation().getDistanceFrom(this.getLocation()) <= rangeOfView) &&
- * (ninja.getLocation().getRelativeDirection(this.getLocation()) <=
- * getLocation() .getDirection() + fieldOfView / 2) &&
- * (ninja.getLocation().getRelativeDirection(this.getLocation()) >=
- * getLocation() .getDirection() - fieldOfView / 2)) { // Verify clear line of
- * sight Location testLoc = this.getLocation(); Tile[][] tiles =
- * getRoom().getTileMap(); Tile currTile; boolean lineOfSight = true; while
- * (testLoc.getDistanceFrom(ninja.getLocation()) > 0) { currTile =
- * tiles[Math.round(testLoc.getX())][Math .round(testLoc.getY())]; if
- * (currTile.getType() == TileType.PATH) { lineOfSight = false; break; } } // If
- * there is a clear line of sight, target the ninja if (lineOfSight) { mode =
- * "pursuit"; this.setTargetLoc(ninja.getLocation()); // Path find } } // Turn
- * toward the ninja this.getLocation().setDirection(
- * this.getLocation().getRelativeDirection(targetLoc));
- * this.setLocation(this.getLocation().move( this.getSpeed(),
- * getLocation().getRelativeDirection(targetLoc))); setChanged();
- * notifyObservers(); // Check for ninja // If ninja is spotted, // Mode =
- * pursuit // Set target location to ninja's position // Find path to target
- * location and store in stack // Set target location to top of stack // If not,
- * // If mode = patrol, // Set target location to next patrol location // Change
- * viewing direction sinusoidally // If mode = pursuit, // If the stack is not
- * empty, // Set target location to top of stack // If the stack is empty, //
- * Rotate clockwise one unit // Counter += rotation unit size // If counter >
- * 2*pi radians - field of view, // Set mode to patrol // Break // Move one unit
- * toward the target location }
- */
-
