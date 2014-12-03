@@ -235,20 +235,8 @@ public class Enemy
     /**
      * Making a fake update just for testing
      */
-<<<<<<< HEAD
-    public void update()
-    {
-        Random rand = new Random();
-        float dir = (float)(rand.nextFloat() * 2 * Math.PI);
-        Location newLocation = getLocation().move(getSpeed(), dir);
-        if (canMoveTo(newLocation))
-        {
-            setLocation(newLocation);
-        }
-=======
     public void update() {
 
->>>>>>> origin/master
     }
 
     /*
