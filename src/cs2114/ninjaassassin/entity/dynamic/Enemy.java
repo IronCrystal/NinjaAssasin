@@ -1,5 +1,6 @@
 package cs2114.ninjaassassin.entity.dynamic;
 
+import android.util.Log;
 import java.util.Collections;
 import java.util.ArrayList;
 import java.util.Set;
@@ -252,6 +253,7 @@ public class Enemy
                         patrolPath.offer(map.get(str));
                     }
                     targetLoc = patrolPath.peek();
+                    Log.i("Enemy", "The number of locations added is " + keys.size());
                 }
                 // If a patrol waypoint is reached,
                 else if (getLocation().equals(targetLoc))
@@ -275,7 +277,6 @@ public class Enemy
         }
         setChanged();
         notifyObservers();
-
     }
 
 
