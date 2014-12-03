@@ -251,6 +251,7 @@ public class Enemy
                     {
                         patrolPath.offer(map.get(str));
                     }
+                    targetLoc = patrolPath.peek();
                 }
                 // If a patrol waypoint is reached,
                 else if (getLocation().equals(targetLoc))
