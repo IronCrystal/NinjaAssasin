@@ -20,13 +20,14 @@ public final class R {
         public static final int optionsbuttonhighlighted=0x7f020006;
         public static final int playbutton=0x7f020007;
         public static final int playbuttonhighlighted=0x7f020008;
-        public static final int tile0=0x7f020009;
-        public static final int tile1=0x7f02000a;
-        public static final int tile2=0x7f02000b;
-        public static final int tile3=0x7f02000c;
-        public static final int tile4=0x7f02000d;
-        public static final int tile5=0x7f02000e;
-        public static final int tile6=0x7f02000f;
+        public static final int target=0x7f020009;
+        public static final int tile0=0x7f02000a;
+        public static final int tile1=0x7f02000b;
+        public static final int tile2=0x7f02000c;
+        public static final int tile3=0x7f02000d;
+        public static final int tile4=0x7f02000e;
+        public static final int tile5=0x7f02000f;
+        public static final int tile6=0x7f020010;
     }
     public static final class id {
         public static final int background=0x7f060001;

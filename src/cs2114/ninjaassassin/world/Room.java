@@ -1,5 +1,6 @@
 package cs2114.ninjaassassin.world;
 
+import cs2114.ninjaassassin.entity.dynamic.Target;
 import android.util.Log;
 import cs2114.ninjaassassin.entity.Entity;
 import cs2114.ninjaassassin.entity.dynamic.DynamicEntity;
@@ -47,6 +48,8 @@ public class Room
     private float                     touchX;
     private float                     touchY;
 
+    private boolean                   hasWon;
+
     // private Resources resources;
 
     /*
@@ -77,6 +80,7 @@ public class Room
         setTouchingDown(false);
         setTouchX(0);
         setTouchY(0);
+        hasWon = false;
         thread = new Thread(this);
         timeStarted = System.currentTimeMillis();
         thread.start();
@@ -227,8 +231,8 @@ public class Room
                             0.3f,
                             5f,
                             1f,
-                            (float) (Math.PI / 4),
-                            5f,
+                            (float) (Math.PI / 2),
+                            100f,
                             this);
                     entities.add(enemy);
                 }
@@ -238,6 +242,11 @@ public class Room
                     String pointName = tileList.get(x).substring(4);
                     enemyPatrolPoints.put(pointName, new Location(x % width, x
                         / width, 0));
+                }
+                else if (tileList.get(x).equalsIgnoreCase("tileT")) {
+                    tileImages[x / width][x % width] = "tile0";
+                    Target target = new Target(new Location(x % width, x / width, 0), 0.5f, 1f, 1f,this);
+                    entities.add(target);
                 }
                 else
                 {
@@ -259,7 +268,7 @@ public class Room
     public void run()
     {
         long timeLastRun = System.currentTimeMillis();
-        while (true)
+        while (!hasWon)
         {
             if (System.currentTimeMillis() - timeStarted > 1000)
             {
@@ -278,6 +287,25 @@ public class Room
                 }
             }
         }
+        //Win the game
+    }
+
+    // ----------------------------------------------------------
+    /**
+     * Sets whether the room has been completed
+     * @param hasWon True if room complete
+     */
+    public void setHasWon(boolean hasWon) {
+        this.hasWon = hasWon;
+    }
+
+    // ----------------------------------------------------------
+    /**
+     * Returns whether the room has been completed
+     * @return true if it has been completed
+     */
+    public boolean getHasWon() {
+        return hasWon;
     }
 
 
