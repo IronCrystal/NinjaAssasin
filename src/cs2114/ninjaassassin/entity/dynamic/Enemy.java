@@ -3,9 +3,7 @@ package cs2114.ninjaassassin.entity.dynamic;
 import android.util.Log;
 import java.util.Collections;
 import java.util.ArrayList;
-import java.util.Set;
 import java.util.HashMap;
-import java.util.Stack;
 import cs2114.ninjaassassin.queue.Queue;
 import cs2114.ninjaassassin.world.tile.TileType;
 import cs2114.ninjaassassin.world.tile.Tile;
@@ -173,21 +171,6 @@ public class Enemy
     }
 
 
-    // ----------------------------------------------------------
-    /**
-     * Finds a path to the specified target location.
-     *
-     * @param target
-     *            The target location to which to find a path
-     * @return A stack of locations marking a path to the target
-     */
-    public Stack<Integer> findPath(int start, int[] pred, double[] dist)
-    {
-        // Under construction
-        return null;
-    }
-
-
     public void update()
     {
         Log.i("Enemy", "The mode is " + mode);
@@ -205,7 +188,7 @@ public class Enemy
             Tile[][] tiles = getRoom().getTileMap();
             Tile currTile;
             boolean lineOfSight = true;
-            /*while (testLoc.getDistanceFrom(ninja.getLocation()) >= getSpeed())
+            while (testLoc.getDistanceFrom(ninja.getLocation()) >= getSpeed())
             {
                 currTile =
                     tiles[(int)Math.floor(testLoc.getY())][(int)Math
@@ -215,12 +198,13 @@ public class Enemy
                     lineOfSight = false;
                     break;
                 }
-            }*/
+                testLoc =
+                    testLoc.move(
+                        getSpeed(),
+                        testLoc.getRelativeDirection(ninja.getLocation()));
+            }
+
             Log.i("Enemy", "The guard sees the player!");
-            testLoc =
-                testLoc.move(
-                    getSpeed(),
-                    testLoc.getRelativeDirection(ninja.getLocation()));
             // If there is a clear line of sight, target the ninja
             if (lineOfSight)
             {
@@ -248,10 +232,10 @@ public class Enemy
 
             }
             else if (mode == Mode.PURSUIT) {
-                if (!patrolPath.isEmpty()) {
+                /*if (!patrolPath.isEmpty()) {
                     this.setLocation(patrolPath.peek());
                     patrolPath.offer(patrolPath.poll());
-                }
+                }*/
             }
             // If the enemy is in patrol mode,
             if (mode == Mode.PATROL)

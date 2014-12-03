@@ -23,7 +23,6 @@ public abstract class DynamicEntity
     private float health;
     private float lethality;
     private Room  room;
-    private float length;
 
 
     // ----------------------------------------------------------

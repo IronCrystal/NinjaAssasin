@@ -1,17 +1,15 @@
 package cs2114.ninjaassassin.entity.dynamic;
 
-import cs2114.ninjaassassin.world.tile.TileType;
 import android.util.Log;
 import cs2114.ninjaassassin.world.Location;
 import cs2114.ninjaassassin.world.Room;
 
 // -------------------------------------------------------------------------
 /**
- * Write a one-sentence summary of your class here. Follow it with additional
- * details about its purpose, what abstraction it represents, and how to use it.
+ * Represents the ninja (the user's character) in NinjaAssassin.
  *
- * @author Andrew Peace
- * @author Elliott Fairhurst
+ * @author Andrew Peace (apeace)
+ * @author Elliott Fairhurst (edf203)
  * @version Dec 1, 2014
  */
 
@@ -72,45 +70,62 @@ public class Ninja
             long timeStarted = System.currentTimeMillis();
             setTargetLoc(new Location(getRoom().getTouchX(), getRoom()
                 .getTouchY(), 0));
-            /*double deltaX = targetLoc.getX() - getLocation().getX();
-            double deltaY = targetLoc.getY() - getLocation().getY();
-
-            // now you know how much far they are
-            double coeff = 0.01; //this coefficient can be tweaked to decice how much near the two points will be after the update.. 0.5 = 50% of the previous distance
-            Location newLoc = new Location((float) (getLocation().getX() + coeff*deltaX), (float) (getLocation().getY() + coeff*deltaY), 0f);
-            Log.i("Ninja", "Setting the location from " + getLocation().toString() + " to " + newLoc.toString());
-            setLocation(newLoc);*/
+            /*
+             * double deltaX = targetLoc.getX() - getLocation().getX(); double
+             * deltaY = targetLoc.getY() - getLocation().getY(); // now you know
+             * how much far they are double coeff = 0.01; //this coefficient can
+             * be tweaked to decice how much near the two points will be after
+             * the update.. 0.5 = 50% of the previous distance Location newLoc =
+             * new Location((float) (getLocation().getX() + coeff*deltaX),
+             * (float) (getLocation().getY() + coeff*deltaY), 0f);
+             * Log.i("Ninja", "Setting the location from " +
+             * getLocation().toString() + " to " + newLoc.toString());
+             * setLocation(newLoc);
+             */
             Location newLocation =
                 getLocation().move(
                     getSpeed(),
                     getLocation().getRelativeDirection(targetLoc));
-            Log.i("Ninja", "The relative Direction is: " + getLocation().getRelativeDirection(targetLoc) + " which is " + Math.toDegrees(getLocation().getRelativeDirection(targetLoc)) + " degrees");
-            Log.i("Ninja", "It is attempting to move toward: " + newLocation.toString());
+            Log.i("Ninja", "The relative Direction is: "
+                + getLocation().getRelativeDirection(targetLoc) + " which is "
+                + Math.toDegrees(getLocation().getRelativeDirection(targetLoc))
+                + " degrees");
+            Log.i(
+                "Ninja",
+                "It is attempting to move toward: " + newLocation.toString());
             if (canMoveTo(newLocation))
             {
                 setLocation(newLocation);
             }
-            else { //Try a direction pi/6 above and below to try to move around obstacles
+            else
+            { // Try a direction pi/6 above and below to try to move around
+// obstacles
                 Location newLocation2 =
-                    getLocation().move(
-                        getSpeed(),
-                        (float) (getLocation().getRelativeDirection(targetLoc) + (Math.PI/3)));
+                    getLocation()
+                        .move(
+                            getSpeed(),
+                            (float)(getLocation().getRelativeDirection(
+                                targetLoc) + (Math.PI / 3)));
                 if (canMoveTo(newLocation2))
                 {
                     setLocation(newLocation2);
                 }
-                else {
+                else
+                {
                     Location newLocation3 =
                         getLocation().move(
                             getSpeed(),
-                            (float) (getLocation().getRelativeDirection(targetLoc) - (Math.PI/3)));
+                            (float)(getLocation().getRelativeDirection(
+                                targetLoc) - (Math.PI / 3)));
                     if (canMoveTo(newLocation3))
                     {
                         setLocation(newLocation3);
                     }
                 }
             }
-            Log.i("Ninja", "It took " + (System.currentTimeMillis() - timeStarted) + " milliseconds to run teh ninja ai");
+            Log.i("Ninja", "It took "
+                + (System.currentTimeMillis() - timeStarted)
+                + " milliseconds to run teh ninja ai");
         }
     }
 }
