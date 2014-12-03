@@ -261,7 +261,7 @@ public class Room
         long timeLastRun = System.currentTimeMillis();
         while (true)
         {
-            if (System.currentTimeMillis() - timeStarted > 600)
+            if (System.currentTimeMillis() - timeStarted > 1000)
             {
                 if (System.currentTimeMillis() - timeLastRun > 20)
                 {
