@@ -288,7 +288,21 @@ public class Enemy
         // If there's something in the way
         else
         {
-            // Under construction
+            float direction =
+                this.getLocation().getRelativeDirection(targetLoc);
+            float coeff = 1;
+            while (!this.canMoveTo(this.getLocation().move(
+                this.getSpeed(),
+                direction)))
+            {
+                if (coeff > 0)
+                {
+                    direction += Math.PI / 8;
+                }
+                coeff *= -1; // Go the other way next time
+            }
+            this.setLocation(this.getLocation()
+                .move(this.getSpeed(), direction));
         }
         setChanged();
         notifyObservers();
