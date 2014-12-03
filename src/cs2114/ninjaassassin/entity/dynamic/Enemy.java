@@ -1,5 +1,9 @@
 package cs2114.ninjaassassin.entity.dynamic;
 
+import java.util.Collections;
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashMap;
 import java.util.Stack;
 import cs2114.ninjaassassin.queue.Queue;
 import cs2114.ninjaassassin.world.tile.TileType;
@@ -29,6 +33,7 @@ public class Enemy
     private Location        targetLoc;
     private Queue<Location> patrolPath;
     private Mode            mode;
+    private float           currentRotation;
 
 
     // ----------------------------------------------------------
@@ -64,6 +69,7 @@ public class Enemy
         this.rangeOfView = rangeOfView;
         mode = Mode.PATROL;
         patrolPath = new Queue<Location>();
+        currentRotation = getLocation().getDirection();
     }
 
 
@@ -183,6 +189,7 @@ public class Enemy
 
     public void update()
     {
+        // Set the target location:
         // If this enemy can see the ninja
         Ninja ninja = getRoom().getNinja();
         if ((ninja.getLocation().getDistanceFrom(this.getLocation()) <= rangeOfView)
@@ -212,10 +219,49 @@ public class Enemy
             {
                 mode = Mode.PURSUIT;
                 this.setTargetLoc(ninja.getLocation());
-                // Path find
             }
         }
-        // Turn toward the ninja
+        // If the enemy cannot see the ninja,
+        else
+        {
+            // If the enemy is in pursuit mode and has run out of target points,
+            if (mode == Mode.PURSUIT && getLocation().equals(targetLoc)
+                && currentRotation < (Math.PI * 2) - fieldOfView)
+            {
+                getLocation().setDirection(
+                    getLocation().getDirection() + fieldOfView / 4);
+                currentRotation += fieldOfView / 4;
+            }
+            else if (mode == Mode.PURSUIT && getLocation().equals(targetLoc)
+                && currentRotation >= (Math.PI * 2) - fieldOfView)
+            {
+                mode = Mode.PATROL;
+            }
+            // If the enemy is in patrol mode,
+            if (mode == Mode.PATROL)
+            {
+                if (patrolPath.isEmpty())
+                {
+                    HashMap<String, Location> map =
+                        getRoom().getEnemyPatrolPoints();
+                    ArrayList<String> keys =
+                        new ArrayList<String>(map.keySet());
+                    Collections.sort(keys);
+                    for (String str : keys)
+                    {
+                        patrolPath.offer(map.get(str));
+                    }
+                }
+                // If a patrol waypoint is reached,
+                else if (getLocation().equals(targetLoc))
+                {
+                    // Target the next point and move the last one to the back
+                    patrolPath.offer(patrolPath.poll());
+                    setTargetLoc(patrolPath.peek());
+                }
+            }
+        }
+        // Once a target is selected, turn and move toward it
         this.getLocation().setDirection(
             this.getLocation().getRelativeDirection(targetLoc));
         this.setLocation(this.getLocation().move(
