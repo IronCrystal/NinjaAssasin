@@ -69,6 +69,7 @@ public class Ninja
     {
         if (getRoom().isTouchingDown())
         {
+            long timeStarted = System.currentTimeMillis();
             setTargetLoc(new Location(getRoom().getTouchX(), getRoom()
                 .getTouchY(), 0));
             /*double deltaX = targetLoc.getX() - getLocation().getX();
@@ -109,6 +110,7 @@ public class Ninja
                     }
                 }
             }
+            Log.i("Ninja", "It took " + (System.currentTimeMillis() - timeStarted) + " milliseconds to run teh ninja ai");
         }
     }
 }
