@@ -204,16 +204,20 @@ public class Enemy
             Tile[][] tiles = getRoom().getTileMap();
             Tile currTile;
             boolean lineOfSight = true;
-            while (testLoc.getDistanceFrom(ninja.getLocation()) > 0)
+            while (testLoc.getDistanceFrom(ninja.getLocation()) >= getSpeed())
             {
                 currTile =
                     tiles[(int)Math.floor(testLoc.getY())][(int)Math
                         .floor(testLoc.getX())];
-                if (currTile.getType() == TileType.PATH)
+                if (currTile.getType() != TileType.PATH)
                 {
                     lineOfSight = false;
                     break;
                 }
+                testLoc =
+                    testLoc.move(
+                        getSpeed(),
+                        testLoc.getRelativeDirection(ninja.getLocation()));
             }
             // If there is a clear line of sight, target the ninja
             if (lineOfSight)
