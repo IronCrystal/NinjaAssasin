@@ -299,6 +299,7 @@ public class Enemy
                 {
                     direction += Math.PI / 8;
                 }
+                direction *= coeff;
                 coeff *= -1; // Go the other way next time
             }
             this.setLocation(this.getLocation()
