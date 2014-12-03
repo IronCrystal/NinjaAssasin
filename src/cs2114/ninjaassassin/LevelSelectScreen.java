@@ -20,10 +20,19 @@ public class LevelSelectScreen extends Screen
 
     // ----------------------------------------------------------
     /**
-     * Place a description of your method here.
+     * Starts level 1
      */
     public void level1Clicked() {
         presentScreen(NinjaAssassinScreen.class, 1);
+        finish();
+    }
+
+ // ----------------------------------------------------------
+    /**
+     *  Starts level 2
+     */
+    public void level2Clicked() {
+        presentScreen(NinjaAssassinScreen.class, 2);
         finish();
     }
 }
