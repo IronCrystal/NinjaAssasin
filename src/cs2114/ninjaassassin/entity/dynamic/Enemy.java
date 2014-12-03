@@ -264,33 +264,16 @@ public class Enemy
         // Once a target is selected, turn and move toward it
         this.getLocation().setDirection(
             this.getLocation().getRelativeDirection(targetLoc));
-        this.setLocation(this.getLocation().move(
+        if (this.canMoveTo(this.getLocation().move(
             this.getSpeed(),
-            getLocation().getRelativeDirection(targetLoc)));
+            this.getLocation().getRelativeDirection(targetLoc))))
+        {
+            this.setLocation(this.getLocation().move(
+                this.getSpeed(),
+                getLocation().getRelativeDirection(targetLoc)));
+        }
         setChanged();
         notifyObservers();
 
-// Psuedocode:
-
-// Check for ninja
-// If ninja is spotted,
-// Mode = pursuit
-// Set target location to ninja's position
-// Find path to target location and store in stack
-// Set target location to top of stack
-// If not,
-// If mode = patrol,
-// Set target location to next patrol location
-// Change viewing direction sinusoidally
-// If mode = pursuit,
-// If the stack is not empty,
-// Set target location to top of stack
-// If the stack is empty,
-// Rotate clockwise one unit
-// Counter += rotation unit size
-// If counter > 2*pi radians - field of view,
-// Set mode to patrol
-// Break
-// Move one unit toward the target location
     }
 }

@@ -227,7 +227,7 @@ public class Room
                             0.3f,
                             5f,
                             1f,
-                            (float)(Math.PI / 4),
+                            (float) (Math.PI / 4),
                             5f,
                             this);
                     entities.add(enemy);
