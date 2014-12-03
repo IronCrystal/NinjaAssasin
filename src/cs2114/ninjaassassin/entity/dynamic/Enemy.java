@@ -207,8 +207,8 @@ public class Enemy
             while (testLoc.getDistanceFrom(ninja.getLocation()) > 0)
             {
                 currTile =
-                    tiles[Math.round(testLoc.getX())][Math
-                        .round(testLoc.getY())];
+                    tiles[(int)Math.floor(testLoc.getX())][(int)Math
+                        .floor(testLoc.getY())];
                 if (currTile.getType() == TileType.PATH)
                 {
                     lineOfSight = false;
@@ -254,7 +254,9 @@ public class Enemy
                         patrolPath.offer(map.get(str));
                     }
                     targetLoc = patrolPath.peek();
-                    Log.i("Enemy", "The number of locations added is " + keys.size());
+                    Log.i(
+                        "Enemy",
+                        "The number of locations added is " + keys.size());
                 }
                 // If a patrol waypoint is reached,
                 else if (this.isCloseTo(targetLoc))
