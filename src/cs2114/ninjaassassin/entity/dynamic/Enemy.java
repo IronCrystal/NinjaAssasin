@@ -28,15 +28,11 @@ public class Enemy
     extends DynamicEntity
 {
 
-    private float                fieldOfView;
-    private float                rangeOfView;
-    private Location             targetLoc;
-    private LinkedList<Location> wayPoints;
-    private Stack<Location>      path;
-    private Stack<Integer>       intPath;
-    private double[]             distances;
-    private ListGraph            graph;
-    private String               mode;
+    private float           fieldOfView;
+    private float           rangeOfView;
+    private Location        targetLoc;
+    private Queue<Location> patrolPath;
+    private String          mode;
 
 
     // ----------------------------------------------------------
@@ -55,8 +51,6 @@ public class Enemy
      *            The field of view of the enemy in radians
      * @param rangeOfView
      *            The range of view of the enemy
-     * @param graph
-     *            The Graph of the accessible areas of the room
      * @param room
      *            The room in which the entity exists
      */
@@ -67,42 +61,33 @@ public class Enemy
         float lethality,
         float fieldOfView,
         float rangeOfView,
-        Graph graph,
         Room room)
     {
         super(loc, speed, health, lethality, room);
         this.fieldOfView = fieldOfView;
         this.rangeOfView = rangeOfView;
-        this.graph = new ListGraph(0, false);
-        for (int i = 0; i < room.getTileMap().length; i++)
-        {
-            for (int j = 0; j < room.getTileMap()[i].length; j++)
-            {
-                if (room.getTileMap()[i][j].getType() == TileType.PATH)
-                {
-                    // graph.insert(new Edge())
-                }
-            }
-        }
-
         mode = "patrol";
-        wayPoints.add(loc); // Add the starting location to the patrol circuit
+        patrolPath.add(loc); // Add the starting location to the patrol circuit
     }
+
 
     // ----------------------------------------------------------
     /**
      * Temporary Constructor for Testing
+     *
      * @param loc
      * @param speed
      * @param health
      * @param lethality
      * @param room
      */
-    public Enemy(Location loc,
+    public Enemy(
+        Location loc,
         float speed,
         float health,
         float lethality,
-        Room room) {
+        Room room)
+    {
         super(loc, speed, health, lethality, room);
     }
 
@@ -200,7 +185,7 @@ public class Enemy
      */
     public void addWayPoint(Location wayPoint)
     {
-        wayPoints.add(wayPoint);
+        patrolPath.add(wayPoint);
         setChanged();
         notifyObservers();
     }
@@ -226,6 +211,7 @@ public class Enemy
      */
     public void pursue(DynamicEntity target)
     {
+
         // Move along the path found in findPath()
     }
 
@@ -240,145 +226,52 @@ public class Enemy
      */
     public Stack<Integer> findPath(int start, int[] pred, double[] dist)
     {
-        int numV = graph.getNumV();
-        HashSet<Integer> vMinusS = new HashSet<Integer>(numV);
-
-        // Initialize V-S
-        for (int i = 0; i < numV; i++)
-        {
-            if (i != start)
-            {
-                vMinusS.add(i);
-            }
-        }
-
-        // Initialize pred and dist
-        for (int v : vMinusS)
-        {
-            pred[v] = start;
-            dist[v] = graph.getEdge(start, v).getWeight();
-        }
-
-        // Main loop
-        while (vMinusS.size() != 0)
-        {
-            // Find the value u in V-S with the smallest dist[u]
-            double minDist = Double.POSITIVE_INFINITY;
-            int u = -1;
-            for (int v : vMinusS)
-            {
-                if (dist[v] < minDist)
-                {
-                    minDist = dist[v];
-                    u = v;
-                }
-            }
-
-            // Remove u from vMinusS
-            vMinusS.remove(u);
-
-            // Update the distances
-            for (int v : vMinusS)
-            {
-                if (graph.isEdge(u, v))
-                {
-                    double weight = graph.getEdge(u, v).getWeight();
-                    if (dist[u] + weight < dist[v])
-                    {
-                        dist[v] = dist[u] + weight;
-                        pred[v] = u;
-                    }
-                }
-            }
-        }
-        intPath = new Stack<Integer>();
-        for (int i = 0; i < pred.length; i++)
-        {
-            intPath.push(pred[i]);
-        }
-        setChanged();
-        notifyObservers();
-        return intPath;
+        // Under construction
+        return null;
     }
+
 
     /**
      * Making a fake update just for testing
      */
-    public void update() {
+    public void update()
+    {
         Random rand = new Random();
         float dir = (float)(rand.nextFloat() * 2 * Math.PI);
-        Location newLocation =
-            getLocation().move(
-                getSpeed(),
-                dir);
-        if (canMoveTo(newLocation)) {
+        Location newLocation = getLocation().move(getSpeed(), dir);
+        if (canMoveTo(newLocation))
+        {
             setLocation(newLocation);
         }
     }
 
-
-    /*public void update()
-    {
-        // If this enemy can see the ninja
-        Ninja ninja = getRoom().getNinja();
-        if ((ninja.getLocation().getDistanceFrom(this.getLocation()) <= rangeOfView)
-            && (ninja.getLocation().getRelativeDirection(this.getLocation()) <= getLocation()
-                .getDirection() + fieldOfView / 2)
-            && (ninja.getLocation().getRelativeDirection(this.getLocation()) >= getLocation()
-                .getDirection() - fieldOfView / 2))
-        {
-            // Verify clear line of sight
-            Location testLoc = this.getLocation();
-            Tile[][] tiles = getRoom().getTileMap();
-            Tile currTile;
-            boolean lineOfSight = true;
-            while (testLoc.getDistanceFrom(ninja.getLocation()) > 0)
-            {
-                currTile =
-                    tiles[Math.round(testLoc.getX())][Math
-                        .round(testLoc.getY())];
-                if (currTile.getType() == TileType.PATH)
-                {
-                    lineOfSight = false;
-                    break;
-                }
-            }
-            // If there is a clear line of sight, target the ninja
-            if (lineOfSight)
-            {
-                mode = "pursuit";
-                this.setTargetLoc(ninja.getLocation());
-                // Path find
-            }
-        }
-        // Turn toward the ninja
-        this.getLocation().setDirection(
-            this.getLocation().getRelativeDirection(targetLoc));
-        this.setLocation(this.getLocation().move(
-            this.getSpeed(),
-            getLocation().getRelativeDirection(targetLoc)));
-        setChanged();
-        notifyObservers();
-
-        // Check for ninja
-        // If ninja is spotted,
-        // Mode = pursuit
-        // Set target location to ninja's position
-        // Find path to target location and store in stack
-        // Set target location to top of stack
-        // If not,
-        // If mode = patrol,
-        // Set target location to next patrol location
-        // Change viewing direction sinusoidally
-        // If mode = pursuit,
-        // If the stack is not empty,
-        // Set target location to top of stack
-        // If the stack is empty,
-        // Rotate clockwise one unit
-        // Counter += rotation unit size
-        // If counter > 2*pi radians - field of view,
-        // Set mode to patrol
-        // Break
-        // Move one unit toward the target location
-    }*/
+    /*
+     * public void update() { // If this enemy can see the ninja Ninja ninja =
+     * getRoom().getNinja(); if
+     * ((ninja.getLocation().getDistanceFrom(this.getLocation()) <= rangeOfView)
+     * && (ninja.getLocation().getRelativeDirection(this.getLocation()) <=
+     * getLocation() .getDirection() + fieldOfView / 2) &&
+     * (ninja.getLocation().getRelativeDirection(this.getLocation()) >=
+     * getLocation() .getDirection() - fieldOfView / 2)) { // Verify clear line
+     * of sight Location testLoc = this.getLocation(); Tile[][] tiles =
+     * getRoom().getTileMap(); Tile currTile; boolean lineOfSight = true; while
+     * (testLoc.getDistanceFrom(ninja.getLocation()) > 0) { currTile =
+     * tiles[Math.round(testLoc.getX())][Math .round(testLoc.getY())]; if
+     * (currTile.getType() == TileType.PATH) { lineOfSight = false; break; } }
+     * // If there is a clear line of sight, target the ninja if (lineOfSight) {
+     * mode = "pursuit"; this.setTargetLoc(ninja.getLocation()); // Path find }
+     * } // Turn toward the ninja this.getLocation().setDirection(
+     * this.getLocation().getRelativeDirection(targetLoc));
+     * this.setLocation(this.getLocation().move( this.getSpeed(),
+     * getLocation().getRelativeDirection(targetLoc))); setChanged();
+     * notifyObservers(); // Check for ninja // If ninja is spotted, // Mode =
+     * pursuit // Set target location to ninja's position // Find path to target
+     * location and store in stack // Set target location to top of stack // If
+     * not, // If mode = patrol, // Set target location to next patrol location
+     * // Change viewing direction sinusoidally // If mode = pursuit, // If the
+     * stack is not empty, // Set target location to top of stack // If the
+     * stack is empty, // Rotate clockwise one unit // Counter += rotation unit
+     * size // If counter > 2*pi radians - field of view, // Set mode to patrol
+     * // Break // Move one unit toward the target location }
+     */
 }
