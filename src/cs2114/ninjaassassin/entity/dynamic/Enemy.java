@@ -207,8 +207,8 @@ public class Enemy
             while (testLoc.getDistanceFrom(ninja.getLocation()) > 0)
             {
                 currTile =
-                    tiles[(int)Math.floor(testLoc.getX())][(int)Math
-                        .floor(testLoc.getY())];
+                    tiles[(int)Math.floor(testLoc.getY())][(int)Math
+                        .floor(testLoc.getX())];
                 if (currTile.getType() == TileType.PATH)
                 {
                     lineOfSight = false;
