@@ -72,7 +72,6 @@ public class NinjaAssassinScreen extends ShapeScreen
             Log.i("Screen", "The starting location is : " + ninja.getLocation().toString());
             EntityDrawing image = new EntityDrawing("ninja", sideLength, ninja);
             ninja.addObserver(image);
-            ninja.setLength(sideLength);
             add(image);
 
             //Create all entities
