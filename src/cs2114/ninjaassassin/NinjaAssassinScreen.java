@@ -170,6 +170,17 @@ public class NinjaAssassinScreen
                 presentScreen(LevelSelectScreen.class);
                 finish();
             }
+            if (room.getHasLost())
+            {
+                Context context = getApplicationContext();
+                CharSequence text = "Game over";
+                int duration = Toast.LENGTH_LONG;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+                presentScreen(LevelSelectScreen.class);
+                finish();
+            }
         }
     }
 
